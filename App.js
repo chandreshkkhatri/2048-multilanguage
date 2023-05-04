@@ -1,20 +1,19 @@
-import { StyleSheet, Text, View } from 'react-native';
-import i18n from './i18n';
+import React from "react";
+import { enableScreens } from "react-native-screens";
 
-export default function App() {
+import StoreProvider from "./src/redux/StoreProvider.component";
+
+import GameScreen from "./src/screens/GameScreen.component";
+
+
+enableScreens();
+
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>{i18n.t('greeting')}</Text>
-      <Text>{i18n.t('welcome')}</Text>
-    </View>
+    <StoreProvider>
+      <GameScreen />
+    </StoreProvider>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
