@@ -1,18 +1,9 @@
 import React from "react";
-import { enableScreens } from "react-native-screens";
-
-import StoreProvider from "./src/redux/StoreProvider.component";
-
-import GameScreen from "./src/screens/GameScreen.component";
-
-
-enableScreens();
+import MainApp from "./src/MainApp";
 
 const App = () => {
   return (
-    <StoreProvider>
-      <GameScreen />
-    </StoreProvider>
+    <MainApp />
   );
 };
 
