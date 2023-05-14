@@ -5,6 +5,7 @@ import Card from '../UI-components/Card.component';
 import CustomText from '../UI-components/CustomText.component';
 
 import * as UIUtils from '../../utils/UI.utils';
+import { getTranslatedNumber } from '../../utils/i18n.utils';
 
 import Colors from '../../constants/colors';
 
@@ -92,7 +93,7 @@ const Tile = ({ tileData, rowIndex, colIndex }) => {
                     ...UIUtils.getTextStyle(tileData.number, Dimensions.get('window').width),
                 }}
             >
-                {tileData.number}
+                {getTranslatedNumber(tileData.number)}
             </CustomText>
         </Animated.View>
     ) : (
