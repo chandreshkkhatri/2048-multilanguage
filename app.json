@@ -30,13 +30,17 @@
       "favicon": "./assets/favicon.png"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/36e7f8cf-f2b8-47cc-9f2c-1e6b1160ff53"
     },
     "extra": {
       "eas": {
         "projectId": "36e7f8cf-f2b8-47cc-9f2c-1e6b1160ff53"
       }
     },
-    "owner": "chandresh.code"
+    "owner": "chandresh.code",
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    }
   }
 }
