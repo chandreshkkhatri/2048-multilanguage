@@ -58,6 +58,7 @@ const GameScreen = () => {
           }}
           style={{ width: 200 }}
         >
+          <Picker.Item label="Sanskrut - संस्कृत" value={Locale.sanskrut} />
           <Picker.Item label="Hindi - हिंदी" value={Locale.hindi} />
           <Picker.Item label="Marathi - मराठी" value={Locale.marathi} />
           <Picker.Item label="Punjabi - ਪੰਜਾਬੀ" value={Locale.punjabi} />

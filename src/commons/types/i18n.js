@@ -3,4 +3,5 @@ export const Locale = {
   hindi: "hi",
   marathi: "mr",
   punjabi: "pa",
+  sanskrut: "sa",
 };
