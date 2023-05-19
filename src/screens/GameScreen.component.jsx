@@ -20,7 +20,7 @@ const GameScreen = () => {
   const isGameOver = useSelector((state) => state.game.isGameOver);
 
   const [modalVisibility, setModalVisibility] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState(Locale.hindi);
+  const [selectedLanguage, setSelectedLanguage] = useState(Locale.sanskrut);
 
   const dispatch = useDispatch();
 
