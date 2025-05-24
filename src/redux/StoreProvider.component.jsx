@@ -6,7 +6,9 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import rootReducer from './root-reducer';
 
-const store = __DEV__ ? createStore(rootReducer, composeWithDevTools()) : createStore(rootReducer);
+const store = __DEV__
+    ? createStore(rootReducer, composeWithDevTools())
+    : createStore(rootReducer);
 // const store = configureStore({
 //     reducer: rootReducer,
 //     devTools: __DEV__ ? composeWithDevTools() : false,

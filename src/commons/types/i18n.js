@@ -1,7 +1,7 @@
 export const Locale = {
-  english: "en",
-  hindi: "hi",
-  marathi: "mr",
-  punjabi: "pa",
-  sanskrut: "sa",
+    english: 'en',
+    hindi: 'hi',
+    marathi: 'mr',
+    punjabi: 'pa',
+    sanskrut: 'sa',
 };

@@ -1,46 +1,44 @@
 {
-  "expo": {
-    "name": "2048-multilanguage",
-    "slug": "2048-multilanguage",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.openmandi.multilanguage2048"
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "package": "com.openmandi.multilanguage2048",
-      "versionCode": 4
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0,
-      "url": "https://u.expo.dev/36e7f8cf-f2b8-47cc-9f2c-1e6b1160ff53"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "36e7f8cf-f2b8-47cc-9f2c-1e6b1160ff53"
-      }
-    },
-    "owner": "chandresh.code",
-    "runtimeVersion": {
-      "policy": "sdkVersion"
+    "expo": {
+        "name": "2048-multilanguage",
+        "slug": "2048-multilanguage",
+        "version": "1.0.0",
+        "orientation": "portrait",
+        "icon": "./assets/icon.png",
+        "userInterfaceStyle": "light",
+        "splash": {
+            "image": "./assets/splash.png",
+            "resizeMode": "contain",
+            "backgroundColor": "#ffffff"
+        },
+        "assetBundlePatterns": ["**/*"],
+        "ios": {
+            "supportsTablet": true,
+            "bundleIdentifier": "com.openmandi.multilanguage2048"
+        },
+        "android": {
+            "adaptiveIcon": {
+                "foregroundImage": "./assets/adaptive-icon.png",
+                "backgroundColor": "#ffffff"
+            },
+            "package": "com.openmandi.multilanguage2048",
+            "versionCode": 4
+        },
+        "web": {
+            "favicon": "./assets/favicon.png"
+        },
+        "updates": {
+            "fallbackToCacheTimeout": 0,
+            "url": "https://u.expo.dev/36e7f8cf-f2b8-47cc-9f2c-1e6b1160ff53"
+        },
+        "extra": {
+            "eas": {
+                "projectId": "36e7f8cf-f2b8-47cc-9f2c-1e6b1160ff53"
+            }
+        },
+        "owner": "chandresh.code",
+        "runtimeVersion": {
+            "policy": "sdkVersion"
+        }
     }
-  }
 }

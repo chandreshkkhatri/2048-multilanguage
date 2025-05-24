@@ -48,7 +48,8 @@ const getRandomNumber = (max) => Math.floor(Math.random() * max) + 1;
 
 const canRenderATile = (board) => {
     for (let row = 0; row < board.length; row++) {
-        for (let col = 0; col < board[row].length; col++) if (!board[row][col]) return true;
+        for (let col = 0; col < board[row].length; col++)
+            if (!board[row][col]) return true;
     }
 
     return false;
@@ -62,9 +63,17 @@ export const checkIsGameOver = (board) => {
             if (!board[row][col]) return false;
 
             if (row < board.length - 1)
-                if (board[row + 1][col] && board[row][col].number === board[row + 1][col]) return false;
+                if (
+                    board[row + 1][col] &&
+                    board[row][col].number === board[row + 1][col]
+                )
+                    return false;
 
-            if (board[row][col + 1] && board[row][col].number === board[row][col + 1]) return false;
+            if (
+                board[row][col + 1] &&
+                board[row][col].number === board[row][col + 1]
+            )
+                return false;
         }
 
     return true;
@@ -87,15 +96,25 @@ export const addNewTile = (board) => {
 const isBoardEquales = (oldboard, updatedBoard) => {
     for (let row = 0; row < oldboard.length; row++) {
         for (let column = 0; column < oldboard[row].length; column++) {
-            if (oldboard[row][column] === null && updatedBoard[row][column] === null) continue;
+            if (
+                oldboard[row][column] === null &&
+                updatedBoard[row][column] === null
+            )
+                continue;
 
             if (
-                (oldboard[row][column] === null && updatedBoard[row][column] !== null) ||
-                (oldboard[row][column] !== null && updatedBoard[row][column] === null)
+                (oldboard[row][column] === null &&
+                    updatedBoard[row][column] !== null) ||
+                (oldboard[row][column] !== null &&
+                    updatedBoard[row][column] === null)
             )
                 return false;
 
-            if (oldboard[row][column].number !== updatedBoard[row][column].number) return false;
+            if (
+                oldboard[row][column].number !==
+                updatedBoard[row][column].number
+            )
+                return false;
         }
     }
 
@@ -173,8 +192,18 @@ const moveUp = (oldBoard) => {
                     continue;
                 }
 
-                const tile1Data = { ...tile1, previousPosition: tile1.currentPosition, isNew: false, isMerged: false };
-                const tile2Data = { ...tile2, previousPosition: tile2.currentPosition, isNew: false, isMerged: false };
+                const tile1Data = {
+                    ...tile1,
+                    previousPosition: tile1.currentPosition,
+                    isNew: false,
+                    isMerged: false,
+                };
+                const tile2Data = {
+                    ...tile2,
+                    previousPosition: tile2.currentPosition,
+                    isNew: false,
+                    isMerged: false,
+                };
 
                 updatedBoard[pointer1][colIndex] = tile1Data;
                 updatedBoard[pointer2][colIndex] = tile2Data;
@@ -186,7 +215,8 @@ const moveUp = (oldBoard) => {
         }
     }
 
-    if (!isBoardEquales(oldBoard, updatedBoard)) updatedBoard = addNewTile(updatedBoard);
+    if (!isBoardEquales(oldBoard, updatedBoard))
+        updatedBoard = addNewTile(updatedBoard);
 
     return { updatedBoard, aggregatedScore };
 };
@@ -262,8 +292,18 @@ const moveDown = (oldBoard) => {
                     continue;
                 }
 
-                const tile1Data = { ...tile1, previousPosition: tile1.currentPosition, isNew: false, isMerged: false };
-                const tile2Data = { ...tile2, previousPosition: tile2.currentPosition, isNew: false, isMerged: false };
+                const tile1Data = {
+                    ...tile1,
+                    previousPosition: tile1.currentPosition,
+                    isNew: false,
+                    isMerged: false,
+                };
+                const tile2Data = {
+                    ...tile2,
+                    previousPosition: tile2.currentPosition,
+                    isNew: false,
+                    isMerged: false,
+                };
 
                 updatedBoard[pointer1][colIndex] = tile1Data;
                 updatedBoard[pointer2][colIndex] = tile2Data;
@@ -275,7 +315,8 @@ const moveDown = (oldBoard) => {
         }
     }
 
-    if (!isBoardEquales(oldBoard, updatedBoard)) updatedBoard = addNewTile(updatedBoard);
+    if (!isBoardEquales(oldBoard, updatedBoard))
+        updatedBoard = addNewTile(updatedBoard);
 
     return { updatedBoard, aggregatedScore };
 };
@@ -352,8 +393,18 @@ const moveRight = (oldBoard) => {
                     continue;
                 }
 
-                const tile1Data = { ...tile1, previousPosition: tile1.currentPosition, isNew: false, isMerged: false };
-                const tile2Data = { ...tile2, previousPosition: tile2.currentPosition, isNew: false, isMerged: false };
+                const tile1Data = {
+                    ...tile1,
+                    previousPosition: tile1.currentPosition,
+                    isNew: false,
+                    isMerged: false,
+                };
+                const tile2Data = {
+                    ...tile2,
+                    previousPosition: tile2.currentPosition,
+                    isNew: false,
+                    isMerged: false,
+                };
 
                 row[pointer1] = tile1Data;
                 row[pointer2] = tile2Data;
@@ -365,7 +416,8 @@ const moveRight = (oldBoard) => {
         }
     }
 
-    if (!isBoardEquales(oldBoard, updatedBoard)) updatedBoard = addNewTile(updatedBoard);
+    if (!isBoardEquales(oldBoard, updatedBoard))
+        updatedBoard = addNewTile(updatedBoard);
 
     return { updatedBoard, aggregatedScore };
 };
@@ -443,8 +495,18 @@ const moveLeft = (oldBoard) => {
                     continue;
                 }
 
-                const tile1Data = { ...tile1, previousPosition: tile1.currentPosition, isNew: false, isMerged: false };
-                const tile2Data = { ...tile2, previousPosition: tile2.currentPosition, isNew: false, isMerged: false };
+                const tile1Data = {
+                    ...tile1,
+                    previousPosition: tile1.currentPosition,
+                    isNew: false,
+                    isMerged: false,
+                };
+                const tile2Data = {
+                    ...tile2,
+                    previousPosition: tile2.currentPosition,
+                    isNew: false,
+                    isMerged: false,
+                };
 
                 row[pointer1] = tile1Data;
                 row[pointer2] = tile2Data;
@@ -456,7 +518,8 @@ const moveLeft = (oldBoard) => {
         }
     }
 
-    if (!isBoardEquales(oldBoard, updatedBoard)) updatedBoard = addNewTile(updatedBoard);
+    if (!isBoardEquales(oldBoard, updatedBoard))
+        updatedBoard = addNewTile(updatedBoard);
 
     return { updatedBoard, aggregatedScore };
 };
