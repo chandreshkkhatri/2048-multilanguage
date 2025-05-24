@@ -98,8 +98,8 @@ const styles = StyleSheet.create({
         maxHeight: 150,
     },
     logo: {
-        width: windowWidth * 0.27,
-        height: windowWidth * 0.27,
+        width: windowWidth * 0.1, // Drastically reduced width
+        height: windowWidth * 0.1, // Drastically reduced height
     },
     logoText: {
         fontSize: windowWidth > 410 ? 40 : 32,

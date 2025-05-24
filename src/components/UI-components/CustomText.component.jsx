@@ -1,8 +1,11 @@
 import React from 'react';
-import { Text, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { Text as PaperText } from 'react-native-paper';
 
 const CustomText = ({ style, children }) => {
-    return <Text style={{ ...styles.text, ...style }}>{children}</Text>;
+    return (
+        <PaperText style={{ ...styles.text, ...style }}>{children}</PaperText>
+    );
 };
 
 const styles = StyleSheet.create({

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Dimensions, StyleSheet, Text } from 'react-native';
+import { Dimensions, StyleSheet, SafeAreaView, View } from 'react-native'; // Added SafeAreaView and View
 import { Picker } from '@react-native-picker/picker';
 import { useSelector, useDispatch } from 'react-redux';
+import { Surface, Text as PaperText } from 'react-native-paper'; // Added Surface and PaperText
 
 import { initGameAction } from '../redux/actions/game.actions';
 
 import Header from '../components/UI-components/Header.component';
-import CustomText from '../components/UI-components/CustomText.component';
+// import CustomText from '../components/UI-components/CustomText.component'; // Replaced with PaperText
 import Board from '../components/game-components/Board.component';
 import GameOverModal from '../components/UI-components/GameOverModal.component';
 
@@ -34,95 +35,114 @@ const GameScreen = () => {
     };
 
     return (
-        <View style={styles.container}>
-            <View style={styles.content}>
-                <Header />
+        <SafeAreaView style={styles.safeArea}>
+            <Surface style={styles.container}>
+                <View style={styles.mainContent}>
+                    <Header />
 
-                <View style={styles.instructionsContainer}>
-                    <CustomText style={styles.instructionsText}>
-                        {i18n.t('instructionsText')}
-                    </CustomText>
+                    <View style={styles.instructionsContainer}>
+                        <PaperText style={styles.instructionsText}>
+                            {i18n.t('instructionsText')}
+                        </PaperText>
+                    </View>
+
+                    <View style={styles.boardContainer}>
+                        <Board />
+                    </View>
                 </View>
 
-                <View style={styles.boardContainer}>
-                    <Board />
+                <View style={styles.pickerContainer}>
+                    <Picker
+                        selectedValue={selectedLanguage}
+                        onValueChange={(itemValue, itemIndex) => {
+                            i18n.locale = itemValue;
+                            setSelectedLanguage(itemValue);
+                        }}
+                        style={styles.picker}
+                    >
+                        <Picker.Item
+                            label="Sanskrut - संस्कृत"
+                            value={Locale.sanskrut}
+                        />
+                        <Picker.Item
+                            label="Hindi - हिंदी"
+                            value={Locale.hindi}
+                        />
+                        <Picker.Item
+                            label="Marathi - मराठी"
+                            value={Locale.marathi}
+                        />
+                        <Picker.Item
+                            label="Punjabi - ਪੰਜਾਬੀ"
+                            value={Locale.punjabi}
+                        />
+                        <Picker.Item
+                            label="English - English"
+                            value={Locale.english}
+                        />
+                    </Picker>
                 </View>
-            </View>
 
-            <View>
-                <Picker
-                    selectedValue={selectedLanguage}
-                    onValueChange={(itemValue, itemIndex) => {
-                        i18n.locale = itemValue;
-                        setSelectedLanguage(itemValue);
-                    }}
-                    style={{ width: 200 }}
-                >
-                    <Picker.Item
-                        label="Sanskrut - संस्कृत"
-                        value={Locale.sanskrut}
-                    />
-                    <Picker.Item label="Hindi - हिंदी" value={Locale.hindi} />
-                    <Picker.Item
-                        label="Marathi - मराठी"
-                        value={Locale.marathi}
-                    />
-                    <Picker.Item
-                        label="Punjabi - ਪੰਜਾਬੀ"
-                        value={Locale.punjabi}
-                    />
-                    <Picker.Item
-                        label="English - English"
-                        value={Locale.english}
-                    />
-                </Picker>
-            </View>
+                <View style={styles.footer}>
+                    <PaperText style={styles.footerText}>
+                        {i18n.t('developedBy')}
+                    </PaperText>
+                </View>
 
-            <View style={styles.footer}>
-                <CustomText style={styles.footerText}>
-                    {i18n.t('developedBy')}
-                </CustomText>
-            </View>
-
-            <GameOverModal
-                visible={modalVisibility}
-                onPressFunction={closeModal}
-            />
-        </View>
+                <GameOverModal
+                    visible={modalVisibility}
+                    onPressFunction={closeModal}
+                />
+            </Surface>
+        </SafeAreaView>
     );
 };
 
 const styles = StyleSheet.create({
+    safeArea: {
+        flex: 1,
+        backgroundColor: Colors.background,
+    },
     container: {
         flex: 1,
         alignItems: 'center',
-        width: '100%',
-        paddingVertical: 80,
-        paddingHorizontal: 20,
-        backgroundColor: Colors.background,
+        padding: 16,
     },
-    content: {
-        flex: 9,
+    mainContent: {
+        flex: 1,
+        alignItems: 'center',
+        width: '100%',
     },
     instructionsContainer: {
         maxWidth: 414,
-        marginVertical: 18,
+        marginVertical: 16,
     },
     instructionsText: {
-        fontSize: windowWidth > 410 ? 22 : 18,
-        color: Colors.text,
+        fontSize: windowWidth > 410 ? 18 : 16,
+        // color: Colors.text, // Color will come from Paper theme
+        textAlign: 'center',
     },
     boardContainer: {
         alignItems: 'center',
+        marginVertical: 16,
+    },
+    pickerContainer: {
+        marginTop: 32,
+        marginBottom: 16,
+        alignItems: 'center',
+    },
+    picker: {
+        width: windowWidth * 0.6,
+        maxWidth: 250,
     },
     footer: {
-        flex: 1,
-        justifyContent: 'flex-end',
+        justifyContent: 'center',
         alignItems: 'center',
         maxWidth: 414,
+        paddingVertical: 8,
     },
     footerText: {
-        color: Colors.text,
+        // color: Colors.text, // Color will come from Paper theme
     },
 });
 

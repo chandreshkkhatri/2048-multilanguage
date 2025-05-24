@@ -1,7 +1,6 @@
 import React from 'react';
-import { Pressable, StyleSheet } from 'react-native';
-
-import CustomText from './CustomText.component';
+import { StyleSheet } from 'react-native';
+import { Button as PaperButton } from 'react-native-paper';
 
 const CustomButton = ({
     title,
@@ -10,14 +9,14 @@ const CustomButton = ({
     textStyle,
 }) => {
     return (
-        <Pressable
-            style={{ ...styles.container, ...containerStyle }}
+        <PaperButton
+            mode="contained" // Default mode, can be customized
             onPress={onPressFunction}
+            style={{ ...styles.container, ...containerStyle }}
+            labelStyle={{ ...styles.text, ...textStyle }} // Map textStyle to labelStyle
         >
-            <CustomText style={{ ...styles.text, ...textStyle }}>
-                {title}
-            </CustomText>
-        </Pressable>
+            {title}
+        </PaperButton>
     );
 };
 
@@ -25,14 +24,12 @@ const styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
         alignItems: 'center',
-        // width: 220,
-        // height: 65,
-        // backgroundColor: '#C2B3A3',
         borderRadius: 5,
+        // backgroundColor is handled by PaperButton's theme or can be overridden in containerStyle
     },
     text: {
-        // fontSize: 32,
-        color: 'white',
+        color: 'white', // This might be overridden by PaperButton's theme, adjust as needed
+        // fontSize can be part of textStyle
     },
 });
 

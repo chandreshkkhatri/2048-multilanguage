@@ -1,8 +1,6 @@
 import React from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
-
-import Card from '../UI-components/Card.component';
-import CustomText from '../UI-components/CustomText.component';
+import { Card as PaperCard, Text as PaperText } from 'react-native-paper';
 
 import Colors from '../../constants/colors';
 
@@ -10,10 +8,12 @@ const windowWidth = Dimensions.get('window').width;
 
 const ScoreBoard = ({ title, score }) => {
     return (
-        <Card style={styles.container}>
-            <CustomText style={styles.title}>{title}</CustomText>
-            <CustomText style={styles.score}>{score}</CustomText>
-        </Card>
+        <PaperCard style={styles.container}>
+            <PaperCard.Content>
+                <PaperText style={styles.title}>{title}</PaperText>
+                <PaperText style={styles.score}>{score}</PaperText>
+            </PaperCard.Content>
+        </PaperCard>
     );
 };
 
@@ -22,17 +22,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '45%',
         height: '100%',
-        paddingHorizontal: 10,
-        paddingVertical: 10,
         backgroundColor: Colors.scoreBoard,
+        justifyContent: 'center',
     },
     title: {
-        fontSize: windowWidth > 410 ? 22 : 16,
-        color: '#eee4da',
+        fontSize: windowWidth > 410 ? 20 : 14,
+        textAlign: 'center',
+        marginBottom: 4,
     },
     score: {
-        fontSize: windowWidth > 410 ? 28 : 20,
-        color: 'white',
+        fontSize: windowWidth > 410 ? 26 : 18,
+        textAlign: 'center',
+        fontWeight: 'bold',
     },
 });
 
