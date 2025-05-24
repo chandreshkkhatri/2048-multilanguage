@@ -3,7 +3,10 @@ import { Dimensions, StyleSheet } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import GestureRecognizer from 'react-native-swipe-gestures';
 
-import { makeMoveAction, gameOverAction } from '../../redux/actions/game.actions';
+import {
+    makeMoveAction,
+    gameOverAction,
+} from '../../redux/actions/game.actions';
 
 import Tile from '../game-components/Tile.component';
 
@@ -13,13 +16,13 @@ import Colors from '../../constants/colors';
 
 const windowWidth = Dimensions.get('window').width;
 
-
 const Board = () => {
     const boardState = useSelector((state) => state.game.board);
 
     const dispatch = useDispatch();
 
-    const makeMove = (direction) => dispatch(makeMoveAction(dispatch, direction));
+    const makeMove = (direction) =>
+        dispatch(makeMoveAction(dispatch, direction));
 
     useEffect(() => {
         const isGameOver = checkIsGameOver(boardState);
@@ -40,7 +43,11 @@ const Board = () => {
                     tile ? (
                         <Tile key={`${rowIndex}-${colIndex}`} tileData={tile} />
                     ) : (
-                        <Tile key={`${rowIndex}-${colIndex}`} rowIndex={rowIndex} colIndex={colIndex} />
+                        <Tile
+                            key={`${rowIndex}-${colIndex}`}
+                            rowIndex={rowIndex}
+                            colIndex={colIndex}
+                        />
                     )
                 )
             )}

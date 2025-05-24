@@ -26,7 +26,10 @@
     "redux-devtools-extension": "^2.13.9",
     "uuid": "^9.0.0",
     "@react-native-picker/picker": "2.4.8",
-    "expo-dev-client": "~2.2.1"
+    "expo-dev-client": "~2.2.1",
+    "react-native-web": "~0.18.10",
+    "react-dom": "18.2.0",
+    "@expo/webpack-config": "^18.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

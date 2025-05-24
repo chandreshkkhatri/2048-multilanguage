@@ -1,12 +1,12 @@
-import React from "react";
-import { Text, StyleSheet } from "react-native";
+import React from 'react';
+import { Text, StyleSheet } from 'react-native';
 
 const CustomText = ({ style, children }) => {
-  return <Text style={{ ...styles.text, ...style }}>{children}</Text>;
+    return <Text style={{ ...styles.text, ...style }}>{children}</Text>;
 };
 
 const styles = StyleSheet.create({
-  text: {},
+    text: {},
 });
 
 export default CustomText;

@@ -3,10 +3,20 @@ import { Pressable, StyleSheet } from 'react-native';
 
 import CustomText from './CustomText.component';
 
-const CustomButton = ({ title, onPressFunction, containerStyle, textStyle }) => {
+const CustomButton = ({
+    title,
+    onPressFunction,
+    containerStyle,
+    textStyle,
+}) => {
     return (
-        <Pressable style={{ ...styles.container, ...containerStyle }} onPress={onPressFunction}>
-            <CustomText style={{ ...styles.text, ...textStyle }}>{title}</CustomText>
+        <Pressable
+            style={{ ...styles.container, ...containerStyle }}
+            onPress={onPressFunction}
+        >
+            <CustomText style={{ ...styles.text, ...textStyle }}>
+                {title}
+            </CustomText>
         </Pressable>
     );
 };

@@ -17,9 +17,14 @@ const GameOverModal = ({ visible, onPressFunction }) => {
         <Modal animationType="fade" visible={visible}>
             <View style={styles.screen}>
                 <View style={styles.container}>
-                    <Logo containerStyle={styles.logoContainer} textStyle={styles.logoText} />
+                    <Logo
+                        containerStyle={styles.logoContainer}
+                        textStyle={styles.logoText}
+                    />
 
-                    <CustomText style={styles.score}>{`Your score is: ${score}`}</CustomText>
+                    <CustomText
+                        style={styles.score}
+                    >{`Your score is: ${score}`}</CustomText>
 
                     <CustomButton
                         title="NEW GAME"

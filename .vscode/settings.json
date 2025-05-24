@@ -1,0 +1,11 @@
+{
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode" // Example: Using Prettier
+        // Or for ESLint: "dbaeumer.vscode-eslint"
+        // Or for VS Code's built-in: "vscode.typescript-language-features"
+    },
+    "[javascriptreact]": {
+        // If you use JSX
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
+}

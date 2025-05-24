@@ -31,13 +31,19 @@ const Tile = ({ tileData, rowIndex, colIndex }) => {
         const { row: previousY, column: previousX } = previousPosition;
 
         const tilePosition = useRef(
-            new Animated.ValueXY({ x: previousX * 81 + (previousX + 1) * 10, y: previousY * 81 + (previousY + 1) * 10 })
+            new Animated.ValueXY({
+                x: previousX * 81 + (previousX + 1) * 10,
+                y: previousY * 81 + (previousY + 1) * 10,
+            })
         ).current;
 
         const animateTile = () => {
             const { row: currentY, column: currentX } = currentPosition;
 
-            const toValue = { x: currentX * 81 + (currentX + 1) * 10, y: currentY * 81 + (currentY + 1) * 10 };
+            const toValue = {
+                x: currentX * 81 + (currentX + 1) * 10,
+                y: currentY * 81 + (currentY + 1) * 10,
+            };
 
             Animated.timing(tilePosition, {
                 toValue,
@@ -90,7 +96,10 @@ const Tile = ({ tileData, rowIndex, colIndex }) => {
             <CustomText
                 style={{
                     ...styles.tileNumber,
-                    ...UIUtils.getTextStyle(tileData.number, Dimensions.get('window').width),
+                    ...UIUtils.getTextStyle(
+                        tileData.number,
+                        Dimensions.get('window').width
+                    ),
                 }}
             >
                 {getTranslatedNumber(tileData.number)}

@@ -10,7 +10,9 @@ import i18n from '../../services/internationalization/i18n';
 const Logo = ({ containerStyle, textStyle }) => {
     return (
         <Card style={{ ...styles.container, ...containerStyle }}>
-            <CustomText style={{ ...styles.text, ...textStyle }}>{i18n.t('gameName')}</CustomText>
+            <CustomText style={{ ...styles.text, ...textStyle }}>
+                {i18n.t('gameName')}
+            </CustomText>
         </Card>
     );
 };
