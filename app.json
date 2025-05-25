@@ -24,7 +24,7 @@
                 "backgroundColor": "#ffffff"
             },
             "package": "com.openmandi.multilanguage2048",
-            "versionCode": 7,
+            "versionCode": 5,
             "targetSdkVersion": 35
         },
         "web": {

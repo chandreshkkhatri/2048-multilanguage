@@ -117,8 +117,8 @@ android {
     defaultConfig {
         applicationId 'com.openmandi.multilanguage2048'
         minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 7
+        targetSdkVersion 35 // rootProject.ext.targetSdkVersion
+        versionCode 5
         versionName "1.1.0"
     }
 
