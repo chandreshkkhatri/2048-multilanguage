@@ -106,14 +106,14 @@ const Header = () => {
 
 const styles = StyleSheet.create({
     topRow: {
-        flexDirection: 'row', // Arrange logo and content side-by-side
-        alignItems: 'center', // Vertically align logo and content if they have different heights
-        width: '100%', // topRow takes the full width of its parent (which is BOARD_WIDTH)
-        // Removed justifyContent: 'space-between' to rely on flex:1 for content expansion
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '100%',
     },
     logo: {
-        width: 120, // Set to 120px as requested
-        height: 150, // Set to 150px as requested
+        width: 120,
+        height: windowHeight * 0.15, // Adjusted to be 15% of screen height
+        maxHeight: 120, // Max height to prevent it from becoming too large on tall screens
         justifyContent: 'center',
         alignItems: 'center',
         flexShrink: 0,
@@ -127,9 +127,9 @@ const styles = StyleSheet.create({
     },
     scoreBoardsContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between', // Pushes scoreboards to the ends of this container
-        width: '100%', // Takes full width of the parent (content view)
-        marginBottom: 12, // Increased space between scoreboards row and buttons row
+        justifyContent: 'space-between',
+        width: '100%',
+        marginBottom: windowHeight * 0.01, // Adjusted to be 1% of screen height
     },
     buttonsContainer: {
         flexDirection: 'row',
@@ -142,10 +142,10 @@ const styles = StyleSheet.create({
         // This leaves 8% of space in the middle, distributed by justifyContent.
     },
     buttonText: {
-        fontSize: 16, // Consider reducing if text length causes buttons to be too wide
+        fontSize: windowWidth > 360 ? 16 : 14, // Slightly smaller font for smaller widths
     },
     logoText: {
-        fontSize: Dimensions.get('window').width > 410 ? 50 : 40, // Keeping previous font size, may need adjustment
+        fontSize: windowWidth > 360 ? (windowHeight > 600 ? 40 : 35) : 30, // Adjusted based on width and height
     },
 });
 
