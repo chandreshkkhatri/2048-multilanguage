@@ -17,11 +17,15 @@ import { Locale } from '../commons/types/i18n';
 
 const windowWidth = Dimensions.get('window').width;
 
+// Board width constants for consistent layout
+const BOARD_WIDTH = 374; // Updated to match Board.component.jsx actual width
+const BOARD_MAX_WIDTH = 374; // Updated to match Board.component.jsx actual width
+
 const GameScreen = () => {
     const isGameOver = useSelector((state) => state.game.isGameOver);
 
     const [modalVisibility, setModalVisibility] = useState(false);
-    const [selectedLanguage, setSelectedLanguage] = useState(Locale.sanskrut);
+    const [selectedLanguage, setSelectedLanguage] = useState(Locale.english);
 
     const dispatch = useDispatch();
 
@@ -114,16 +118,20 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     instructionsContainer: {
-        maxWidth: 414,
+        width: BOARD_WIDTH,
+        maxWidth: BOARD_MAX_WIDTH,
+        alignSelf: 'center',
         marginVertical: 16,
     },
     instructionsText: {
         fontSize: windowWidth > 410 ? 18 : 16,
-        // color: Colors.text, // Color will come from Paper theme
         textAlign: 'center',
     },
     boardContainer: {
         alignItems: 'center',
+        width: BOARD_WIDTH,
+        maxWidth: BOARD_MAX_WIDTH,
+        alignSelf: 'center',
         marginVertical: 16,
     },
     pickerContainer: {

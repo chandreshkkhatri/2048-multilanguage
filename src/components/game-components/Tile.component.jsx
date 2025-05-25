@@ -10,6 +10,8 @@ import { getTranslatedNumber } from '../../utils/i18n.utils';
 const Tile = ({ tileData, rowIndex, colIndex }) => {
     const theme = useTheme();
 
+    const tilePosition = useRef(new Animated.ValueXY()).current;
+
     const getDynamicStyles = () => {
         if (tileData) {
             return {
@@ -36,13 +38,6 @@ const Tile = ({ tileData, rowIndex, colIndex }) => {
     if (tileData) {
         const { currentPosition, previousPosition } = tileData;
         const { row: previousY, column: previousX } = previousPosition;
-
-        const tilePosition = useRef(
-            new Animated.ValueXY({
-                x: previousX * 81 + (previousX + 1) * 10,
-                y: previousY * 81 + (previousY + 1) * 10,
-            })
-        ).current;
 
         const animateTile = () => {
             const { row: currentY, column: currentX } = currentPosition;

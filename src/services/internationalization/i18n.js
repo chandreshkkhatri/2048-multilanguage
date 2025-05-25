@@ -14,6 +14,6 @@ const i18n = new I18n({
     pa,
 });
 
-i18n.locale = 'sa';
+i18n.locale = 'en';
 
 export default i18n;

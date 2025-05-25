@@ -29,9 +29,9 @@ export const getTileColor = (number) => {
 
 export const getTextStyle = (number, deviceWidth) => {
     const getFontSize = () => {
-        const fontSize = (deviceWidth - 30) / 10 + 5;
+        const fontSize = (deviceWidth - 30) / 12; // Changed divisor from 10 and removed +2
 
-        if (number > 1000) return fontSize - 6;
+        if (number > 1000) return fontSize - 8; // Keeps the existing reduction for large numbers
 
         return fontSize;
     };

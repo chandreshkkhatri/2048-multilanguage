@@ -17,6 +17,10 @@ import { getTranslatedNumber } from '../../utils/i18n.utils';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
+// Board width constants for consistent layout
+const BOARD_WIDTH = 374; // Updated to match Board.component.jsx actual width
+const BOARD_MAX_WIDTH = 374; // Updated to match Board.component.jsx actual width
+
 const Header = () => {
     const gameScore = useSelector((state) => state.game.score);
 
@@ -53,36 +57,47 @@ const Header = () => {
     const initNewGame = () => dispatch(initGameAction());
 
     return (
-        <View style={styles.container}>
-            <Logo containerStyle={styles.logo} textStyle={styles.logoText} />
+        <View
+            style={{
+                width: BOARD_WIDTH,
+                maxWidth: BOARD_MAX_WIDTH,
+                alignSelf: 'center',
+            }}
+        >
+            <View style={styles.topRow}>
+                <Logo
+                    containerStyle={styles.logo}
+                    textStyle={styles.logoText}
+                />
 
-            <View style={styles.content}>
-                <View style={styles.scoreBoardsContainer}>
-                    <ScoreBoard
-                        title={i18n.t('score')}
-                        score={getTranslatedNumber(gameScore)}
-                    />
+                <View style={styles.content}>
+                    <View style={styles.scoreBoardsContainer}>
+                        <ScoreBoard
+                            title={i18n.t('score')}
+                            score={getTranslatedNumber(gameScore)}
+                        />
 
-                    <ScoreBoard
-                        title={i18n.t('best')}
-                        score={getTranslatedNumber(bestGameScore)}
-                    />
-                </View>
+                        <ScoreBoard
+                            title={i18n.t('best')}
+                            score={getTranslatedNumber(bestGameScore)}
+                        />
+                    </View>
 
-                <View style={styles.buttonsContainer}>
-                    <CustomButton
-                        title={i18n.t('menu')}
-                        onPressFunction={mimicButtonPress}
-                        containerStyle={styles.buttonContainer}
-                        textStyle={styles.buttonText}
-                    />
+                    <View style={styles.buttonsContainer}>
+                        <CustomButton
+                            title={i18n.t('menu')}
+                            onPressFunction={mimicButtonPress}
+                            containerStyle={styles.buttonContainer}
+                            textStyle={styles.buttonText}
+                        />
 
-                    <CustomButton
-                        title={i18n.t('newGame')}
-                        onPressFunction={initNewGame}
-                        containerStyle={styles.buttonContainer}
-                        textStyle={styles.buttonText}
-                    />
+                        <CustomButton
+                            title={i18n.t('newGame')}
+                            onPressFunction={initNewGame}
+                            containerStyle={styles.buttonContainer}
+                            textStyle={styles.buttonText}
+                        />
+                    </View>
                 </View>
             </View>
         </View>
@@ -90,43 +105,47 @@ const Header = () => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        height: windowHeight * 0.17,
-        maxWidth: 414,
-        maxHeight: 150,
+    topRow: {
+        flexDirection: 'row', // Arrange logo and content side-by-side
+        alignItems: 'center', // Vertically align logo and content if they have different heights
+        width: '100%', // topRow takes the full width of its parent (which is BOARD_WIDTH)
+        // Removed justifyContent: 'space-between' to rely on flex:1 for content expansion
     },
     logo: {
-        width: windowWidth * 0.1, // Drastically reduced width
-        height: windowWidth * 0.1, // Drastically reduced height
-    },
-    logoText: {
-        fontSize: windowWidth > 410 ? 40 : 32,
+        width: 120, // Set to 120px as requested
+        height: 150, // Set to 150px as requested
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexShrink: 0,
     },
     content: {
-        justifyContent: 'space-between',
-        width: '60%',
-        height: '100%',
+        flex: 1, // CRITICAL: This makes the content view expand to fill remaining horizontal space in topRow
+        flexDirection: 'column', // Stack scoreBoardsContainer and buttonsContainer vertically
+        // Removed justifyContent: 'space-between' and height: '100%'
+        // Let height be intrinsic and children manage their vertical space.
+        marginLeft: 15, // Increased space between logo and the content area
     },
     scoreBoardsContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        width: '100%',
-        height: '65%',
+        justifyContent: 'space-between', // Pushes scoreboards to the ends of this container
+        width: '100%', // Takes full width of the parent (content view)
+        marginBottom: 12, // Increased space between scoreboards row and buttons row
     },
     buttonsContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        width: '100%',
-        height: '25%',
+        justifyContent: 'space-between', // Pushes buttons to the ends of this container
+        width: '100%', // Takes full width of the parent (content view)
     },
     buttonContainer: {
-        width: '45%',
-        backgroundColor: Colors.button,
+        // Style for each CustomButton's wrapper
+        width: '46%', // Each button takes 46% of buttonsContainer width.
+        // This leaves 8% of space in the middle, distributed by justifyContent.
     },
     buttonText: {
-        fontSize: 16,
+        fontSize: 16, // Consider reducing if text length causes buttons to be too wide
+    },
+    logoText: {
+        fontSize: Dimensions.get('window').width > 410 ? 50 : 40, // Keeping previous font size, may need adjustment
     },
 });
 
