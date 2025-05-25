@@ -36,36 +36,54 @@ const Tile = ({ tileData, rowIndex, colIndex }) => {
     let dynamicStyle = getDynamicStyles();
 
     if (tileData) {
-        const { currentPosition, previousPosition } = tileData;
-        const { row: previousY, column: previousX } = previousPosition;
+        const { currentPosition, previousPosition, isNew, isMerged } = tileData;
+        const targetX =
+            currentPosition.column * 81 + (currentPosition.column + 1) * 10;
+        const targetY =
+            currentPosition.row * 81 + (currentPosition.row + 1) * 10;
 
-        const animateTile = () => {
-            const { row: currentY, column: currentX } = currentPosition;
-            const toValue = {
-                x: currentX * 81 + (currentX + 1) * 10,
-                y: currentY * 81 + (currentY + 1) * 10,
-            };
+        const shouldAnimate =
+            isNew ||
+            isMerged ||
+            currentPosition.row !== previousPosition.row ||
+            currentPosition.column !== previousPosition.column;
+
+        if (shouldAnimate) {
+            // If it's a pure move (not new, not merged), set the starting point for the animation
+            // to its actual previous grid position.
+            if (
+                !isNew &&
+                !isMerged &&
+                (currentPosition.row !== previousPosition.row ||
+                    currentPosition.column !== previousPosition.column)
+            ) {
+                const prevGridX =
+                    previousPosition.column * 81 +
+                    (previousPosition.column + 1) * 10;
+                const prevGridY =
+                    previousPosition.row * 81 + (previousPosition.row + 1) * 10;
+                tilePosition.setValue({ x: prevGridX, y: prevGridY });
+            }
+            // For new or merged tiles, the animation will start from tilePosition's current value.
+            // If this Tile component instance was previously an empty slot, tilePosition is likely {x:0, y:0},
+            // so new tiles might appear to slide from the top-left. This change doesn't alter that specific animation
+            // but focuses on fixing disappearing static tiles.
 
             Animated.timing(tilePosition, {
-                toValue,
+                toValue: { x: targetX, y: targetY },
                 duration: 100,
                 useNativeDriver: true,
             }).start();
-        };
+        } else {
+            // STATIC TILE: No animation is needed.
+            // Explicitly set its position to ensure it's not rendered at an incorrect default (like 0,0).
+            tilePosition.setValue({ x: targetX, y: targetY });
+        }
 
         dynamicStyle = {
             ...dynamicStyle,
             transform: tilePosition.getTranslateTransform(),
         };
-
-        if (
-            currentPosition.row !== previousPosition.row ||
-            currentPosition.column !== previousPosition.column ||
-            tileData.isNew ||
-            tileData.isMerged
-        ) {
-            animateTile();
-        }
     }
 
     return tileData ? (

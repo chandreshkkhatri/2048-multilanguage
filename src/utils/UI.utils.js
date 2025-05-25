@@ -29,20 +29,21 @@ export const getTileColor = (number) => {
 
 export const getTextStyle = (number, deviceWidth) => {
     const getFontSize = () => {
-        const baseFontSize = (deviceWidth - 30) / 10; // Adjusted base calculation slightly for more range
+        // Reduced base font size calculation for smaller numbers
+        const baseFontSize = (deviceWidth - 30) / 14; // Changed divisor from 10 to 14
 
         if (number >= 10000) {
             // 5+ digits (e.g., 16384)
-            return baseFontSize - 12;
+            return baseFontSize - 11; // Adjusted subtraction
         } else if (number >= 1000) {
             // 4 digits (e.g., 1024, 2048, 4096, 8192)
-            return baseFontSize - 9;
+            return baseFontSize - 8; // Adjusted subtraction
         } else if (number >= 100) {
             // 3 digits (e.g., 128, 256, 512)
-            return baseFontSize - 6;
+            return baseFontSize - 5; // Adjusted subtraction
         } else if (number >= 10) {
             // 2 digits (e.g., 16, 32, 64)
-            return baseFontSize - 3;
+            return baseFontSize - 2; // Adjusted subtraction
         } else {
             // 1 digit (e.g., 2, 4, 8)
             return baseFontSize;
