@@ -10,12 +10,13 @@ export const setBestGameScore = async (newGameScore) => {
 
 export const getBestGameScore = async () => {
     try {
-        const bestGameScore = await AsyncStorage.getItem('bestGameScore');
+        const bestGameScoreString = await AsyncStorage.getItem('bestGameScore');
 
-        if (!bestGameScore) return 0;
+        if (!bestGameScoreString) return 0;
 
-        return bestGameScore;
+        return parseInt(bestGameScoreString, 10); // Parse to integer
     } catch (err) {
         console.log(err);
+        return 0; // Return a default value in case of error
     }
 };
