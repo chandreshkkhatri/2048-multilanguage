@@ -2,7 +2,7 @@
     "expo": {
         "name": "2048-multilanguage",
         "slug": "2048-multilanguage",
-        "version": "1.0.0",
+        "version": "1.1.0",
         "orientation": "portrait",
         "icon": "./assets/icon.png",
         "userInterfaceStyle": "light",
@@ -11,7 +11,9 @@
             "resizeMode": "contain",
             "backgroundColor": "#ffffff"
         },
-        "assetBundlePatterns": ["**/*"],
+        "assetBundlePatterns": [
+            "**/*"
+        ],
         "ios": {
             "supportsTablet": true,
             "bundleIdentifier": "com.openmandi.multilanguage2048"
@@ -22,7 +24,8 @@
                 "backgroundColor": "#ffffff"
             },
             "package": "com.openmandi.multilanguage2048",
-            "versionCode": 4
+            "versionCode": 7,
+            "targetSdkVersion": 35
         },
         "web": {
             "favicon": "./assets/favicon.png"
