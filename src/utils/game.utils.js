@@ -2,26 +2,6 @@ import cloneDeep from 'lodash/cloneDeep';
 
 import Tile from '../models/tile.model';
 
-// Array Helper Functions
-const transposeMatrix = (matrix, numOfTimes = 1) => {
-    const rotate = () => {
-        let result = [];
-
-        for (let i = 0; i < matrix[0].length; i++) {
-            let row = matrix.map((e) => e[i]).reverse();
-            result.push(row);
-        }
-
-        return result;
-    };
-
-    let transposedMatrix;
-
-    for (let i = 0; i < numOfTimes; i++) transposedMatrix = rotate();
-
-    return transposedMatrix;
-};
-
 // Game Logic
 export const createNewBoard = () => {
     let board = [
@@ -56,8 +36,6 @@ const canRenderATile = (board) => {
 };
 
 export const checkIsGameOver = (board) => {
-    if (!canRenderATile(board)) return true;
-
     for (let row = 0; row < board.length; row++)
         for (let col = 0; col < board[row].length; col++) {
             if (!board[row][col]) return false;
@@ -65,29 +43,32 @@ export const checkIsGameOver = (board) => {
             if (row < board.length - 1)
                 if (
                     board[row + 1][col] &&
-                    board[row][col].number === board[row + 1][col]
+                    board[row][col].number === board[row + 1][col].number
                 )
                     return false;
 
-            if (
-                board[row][col + 1] &&
-                board[row][col].number === board[row][col + 1]
-            )
-                return false;
+            if (col < board[row].length - 1)
+                if (
+                    board[row][col + 1] &&
+                    board[row][col].number === board[row][col + 1].number
+                )
+                    return false;
         }
 
     return true;
 };
 
 export const addNewTile = (board) => {
-    const row = getRandomNumber(4) - 1;
-    const column = getRandomNumber(4) - 1;
-    const randomTile = board[row][column];
+    const emptyCells = [];
+    for (let row = 0; row < board.length; row++)
+        for (let col = 0; col < board[row].length; col++)
+            if (!board[row][col]) emptyCells.push({ row, column: col });
 
-    if (randomTile) return addNewTile(board);
+    if (emptyCells.length === 0) return board;
 
+    const { row, column } = emptyCells[getRandomNumber(emptyCells.length) - 1];
     const updatedBoard = [...board];
-    const tileNumber = getRandomNumber(1) > 0 ? 2 : 4;
+    const tileNumber = getRandomNumber(10) > 1 ? 2 : 4;
     updatedBoard[row][column] = new Tile(tileNumber, { row, column });
 
     return updatedBoard;

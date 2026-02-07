@@ -22,7 +22,7 @@ const Board = () => {
     const dispatch = useDispatch();
 
     const makeMove = (direction) =>
-        dispatch(makeMoveAction(dispatch, direction));
+        dispatch(makeMoveAction(direction));
 
     useEffect(() => {
         const isGameOver = checkIsGameOver(boardState);

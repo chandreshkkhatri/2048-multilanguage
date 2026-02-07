@@ -4,7 +4,7 @@ import i18n from '../services/internationalization/i18n';
 export const getTranslatedNumber = (number) => {
     const numberString = number.toString();
 
-    if (i18n.locale != Locale.english) {
+    if (i18n.locale !== Locale.english) {
         var translatedNumber = numberString
             .split('')
             .map((digit) => {

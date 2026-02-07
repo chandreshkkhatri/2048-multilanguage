@@ -4,10 +4,9 @@ export const initGameAction = () => ({
     type: gameActionTypes.INIT_GAME,
 });
 
-export const makeMoveAction = (dispatch, direction) => ({
+export const makeMoveAction = (direction) => ({
     type: gameActionTypes.MOVE,
     payload: {
-        dispatch,
         direction,
     },
 });

@@ -52,7 +52,7 @@ const Header = () => {
         };
 
         updateBestScore();
-    }, [gameScore]);
+    }, [gameScore, bestGameScore]);
 
     const initNewGame = () => dispatch(initGameAction());
 

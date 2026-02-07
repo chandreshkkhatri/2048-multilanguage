@@ -137,7 +137,7 @@ const gameReducer = (gameState = GAME_INITIAL_STATE, action) => {
         case gameActionTypes.INIT_GAME:
             return { ...GAME_INITIAL_STATE, board: gameUtils.createNewBoard() };
         case gameActionTypes.MOVE:
-            const { dispatch, direction } = action.payload;
+            const { direction } = action.payload;
             const board = gameState.board;
 
             const { updatedBoard, aggregatedScore } = gameUtils.makeMove(
@@ -148,7 +148,7 @@ const gameReducer = (gameState = GAME_INITIAL_STATE, action) => {
             return {
                 ...gameState,
                 board: updatedBoard,
-                score: (gameState.score += aggregatedScore),
+                score: gameState.score + aggregatedScore,
             };
         case gameActionTypes.GAME_OVER:
             return { ...gameState, isGameOver: true };
