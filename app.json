@@ -2,7 +2,7 @@
     "expo": {
         "name": "2048-multilanguage",
         "slug": "2048-multilanguage",
-        "version": "1.1.0",
+        "version": "1.0.0",
         "orientation": "portrait",
         "icon": "./assets/icon.png",
         "userInterfaceStyle": "light",
@@ -24,7 +24,7 @@
                 "backgroundColor": "#ffffff"
             },
             "package": "com.karmalok.multilingual2048",
-            "versionCode": 5,
+            "versionCode": 1,
             "targetSdkVersion": 35
         },
         "web": {
@@ -44,6 +44,13 @@
                 "projectId": "36e7f8cf-f2b8-47cc-9f2c-1e6b1160ff53"
             }
         },
+        "plugins": [
+            ["expo-build-properties", {
+                "android": {
+                    "targetSdkVersion": 35
+                }
+            }]
+        ],
         "newArchEnabled": false,
         "owner": "chandresh.code",
         "runtimeVersion": {
