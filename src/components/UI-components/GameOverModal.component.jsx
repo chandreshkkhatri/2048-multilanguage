@@ -12,6 +12,8 @@ import {
 import Logo from './Logo.component';
 
 import Colors from '../../constants/colors';
+import i18n from '../../services/internationalization/i18n';
+import { getTranslatedNumber } from '../../utils/i18n.utils';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -33,7 +35,7 @@ const GameOverModal = ({ visible, onPressFunction }) => {
 
                     <PaperText
                         style={styles.score}
-                    >{`Your score is: ${score}`}</PaperText>
+                    >{`${i18n.t('yourScoreIs')} ${getTranslatedNumber(score)}`}</PaperText>
 
                     <PaperButton
                         mode="contained"
@@ -41,7 +43,7 @@ const GameOverModal = ({ visible, onPressFunction }) => {
                         style={styles.buttonStyle}
                         labelStyle={styles.buttonText}
                     >
-                        NEW GAME
+                        {i18n.t('newGame')}
                     </PaperButton>
                 </Surface>
             </PaperModal>

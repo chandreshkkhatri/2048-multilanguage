@@ -12,7 +12,7 @@ import Board from '../components/game-components/Board.component';
 import GameOverModal from '../components/UI-components/GameOverModal.component';
 
 import Colors from '../constants/colors';
-import i18n from '../services/internationalization/i18n';
+import i18n, { detectedLocale } from '../services/internationalization/i18n';
 import { Locale } from '../commons/types/i18n';
 
 const windowWidth = Dimensions.get('window').width;
@@ -26,7 +26,7 @@ const GameScreen = () => {
     const isGameOver = useSelector((state) => state.game.isGameOver);
 
     const [modalVisibility, setModalVisibility] = useState(false);
-    const [selectedLanguage, setSelectedLanguage] = useState(Locale.english);
+    const [selectedLanguage, setSelectedLanguage] = useState(detectedLocale);
 
     const dispatch = useDispatch();
 
