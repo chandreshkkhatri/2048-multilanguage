@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Animated, Dimensions, StyleSheet, Platform } from 'react-native';
 import { Text as PaperText, useTheme } from 'react-native-paper';
 
@@ -10,33 +10,11 @@ import { TILE_SIZE, ANIMATION_DURATION, tilePosition as calcTilePos } from '../.
 
 const Tile = ({ tileData, rowIndex, colIndex }) => {
     const theme = useTheme();
-
     const tilePosition = useRef(new Animated.ValueXY()).current;
 
-    const getDynamicStyles = () => {
-        if (tileData) {
-            return {
-                ...styles.container,
-                ...styles.tile,
-                zIndex: 100,
-                backgroundColor: UIUtils.getTileColor(tileData.number),
-                borderRadius: theme.roundness,
-            };
-        } else {
-            return {
-                ...styles.container,
-                ...styles.emptyTile,
-                backgroundColor: theme.colors.emptyTile,
-                borderRadius: theme.roundness,
-                top: calcTilePos(rowIndex),
-                left: calcTilePos(colIndex),
-            };
-        }
-    };
+    useEffect(() => {
+        if (!tileData) return;
 
-    let dynamicStyle = getDynamicStyles();
-
-    if (tileData) {
         const { currentPosition, previousPosition, isNew, isMerged } = tileData;
         const targetX = calcTilePos(currentPosition.column);
         const targetY = calcTilePos(currentPosition.row);
@@ -59,23 +37,41 @@ const Tile = ({ tileData, rowIndex, colIndex }) => {
                 tilePosition.setValue({ x: prevGridX, y: prevGridY });
             }
 
-            Animated.timing(tilePosition, {
+            const anim = Animated.timing(tilePosition, {
                 toValue: { x: targetX, y: targetY },
                 duration: ANIMATION_DURATION,
                 useNativeDriver: Platform.OS !== 'web',
-            }).start();
+            });
+            anim.start();
+            return () => anim.stop();
         } else {
             tilePosition.setValue({ x: targetX, y: targetY });
         }
+    }, [tileData]);
 
-        dynamicStyle = {
-            ...dynamicStyle,
-            transform: tilePosition.getTranslateTransform(),
+    if (!tileData) {
+        const emptyStyle = {
+            ...styles.container,
+            ...styles.emptyTile,
+            backgroundColor: theme.colors.emptyTile,
+            borderRadius: theme.roundness,
+            top: calcTilePos(rowIndex),
+            left: calcTilePos(colIndex),
         };
+        return <Card style={emptyStyle}></Card>;
     }
 
-    return tileData ? (
-        <Animated.View style={dynamicStyle}>
+    const tileStyle = {
+        ...styles.container,
+        ...styles.tile,
+        zIndex: 100,
+        backgroundColor: UIUtils.getTileColor(tileData.number),
+        borderRadius: theme.roundness,
+        transform: tilePosition.getTranslateTransform(),
+    };
+
+    return (
+        <Animated.View style={tileStyle}>
             <PaperText
                 style={{
                     ...styles.tileNumber,
@@ -88,8 +84,6 @@ const Tile = ({ tileData, rowIndex, colIndex }) => {
                 {getTranslatedNumber(tileData.number)}
             </PaperText>
         </Animated.View>
-    ) : (
-        <Card style={dynamicStyle}></Card>
     );
 };
 

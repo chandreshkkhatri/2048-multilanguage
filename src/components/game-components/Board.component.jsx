@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
         height: windowWidth - 40,
         maxHeight: BOARD_SIZE,
         backgroundColor: Colors.board,
-        borderRadius: 5,
+        borderRadius: 8,
     },
 });
 

@@ -10,10 +10,10 @@ const CustomButton = ({
 }) => {
     return (
         <PaperButton
-            mode="contained" // Default mode, can be customized
+            mode="contained"
             onPress={onPressFunction}
             style={{ ...styles.container, ...containerStyle }}
-            labelStyle={{ ...styles.text, ...textStyle }} // Map textStyle to labelStyle
+            labelStyle={{ ...styles.text, ...textStyle }}
         >
             {title}
         </PaperButton>
@@ -24,12 +24,10 @@ const styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 5,
-        // backgroundColor is handled by PaperButton's theme or can be overridden in containerStyle
+        borderRadius: 8,
     },
     text: {
-        color: 'white', // This might be overridden by PaperButton's theme, adjust as needed
-        // fontSize can be part of textStyle
+        color: 'white',
     },
 });
 

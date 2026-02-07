@@ -1,7 +1,5 @@
 import cloneDeep from 'lodash/cloneDeep';
 
-import Tile from '../models/tile.model';
-
 // Game Logic
 export const createNewBoard = () => {
     let board = [
@@ -62,7 +60,13 @@ export const addNewTile = (board) => {
     const { row, column } = emptyCells[getRandomNumber(emptyCells.length) - 1];
     const updatedBoard = [...board];
     const tileNumber = getRandomNumber(10) > 1 ? 2 : 4;
-    updatedBoard[row][column] = new Tile(tileNumber, { row, column });
+    updatedBoard[row][column] = {
+        number: tileNumber,
+        currentPosition: { row, column },
+        previousPosition: { row, column },
+        isNew: true,
+        isMerged: false,
+    };
 
     return updatedBoard;
 };
@@ -221,7 +225,7 @@ const moveDown = (board) =>
         startPointer: BOARD_LENGTH - 1,
         endPointer: BOARD_LENGTH - 2,
         step: -1,
-        isInBounds: (p) => p >= 0,
+        isInBounds: (p) => p > 0,
         getCell: (col, ptr) => [ptr, col],
         makePosition: (col, ptr) => ({ row: ptr, column: col }),
     });
@@ -243,7 +247,7 @@ const moveRight = (board) =>
         startPointer: BOARD_LENGTH - 1,
         endPointer: BOARD_LENGTH - 2,
         step: -1,
-        isInBounds: (p) => p >= 0,
+        isInBounds: (p) => p > 0,
         getCell: (row, ptr) => [row, ptr],
         makePosition: (row, ptr) => ({ row, column: ptr }),
     });

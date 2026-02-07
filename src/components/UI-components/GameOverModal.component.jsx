@@ -62,7 +62,6 @@ const styles = StyleSheet.create({
     surface: {
         alignItems: 'center',
         justifyContent: 'space-around',
-        padding: 16,
         width: '100%',
         minHeight: 250,
         elevation: 4,

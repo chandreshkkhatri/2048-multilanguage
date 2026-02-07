@@ -16,6 +16,9 @@ const Colors = {
     tile512: '#E8BE40',
     tile1024: '#E8BB31',
     tile2048: '#E7B723',
+    tile4096: '#FF3D3D',
+    tile8192: '#FF1A1A',
+    tile16384: '#CC0000',
 };
 
 export default Colors;

@@ -22,8 +22,14 @@ export const getTileColor = (number) => {
             return Colors.tile512;
         case 1024:
             return Colors.tile1024;
-        default:
+        case 2048:
             return Colors.tile2048;
+        case 4096:
+            return Colors.tile4096;
+        case 8192:
+            return Colors.tile8192;
+        default:
+            return Colors.tile16384;
     }
 };
 
@@ -53,5 +59,6 @@ export const getTextStyle = (number, deviceWidth) => {
     return {
         color: number > 4 ? 'white' : Colors.text,
         fontSize: getFontSize(),
+        fontWeight: 'bold',
     };
 };

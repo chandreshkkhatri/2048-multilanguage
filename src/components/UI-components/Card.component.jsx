@@ -10,8 +10,8 @@ const Card = ({ style, children }) => {
 
 const styles = StyleSheet.create({
     card: {
-        borderRadius: 5,
-        elevation: 4, // Added elevation for Paper Card
+        borderRadius: 8,
+        elevation: 4,
     },
 });
 

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Dimensions, StyleSheet, SafeAreaView, View } from 'react-native'; // Added SafeAreaView and View
+import { Dimensions, StyleSheet, SafeAreaView, View } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { useSelector, useDispatch } from 'react-redux';
-import { Surface, Text as PaperText } from 'react-native-paper'; // Added Surface and PaperText
+import { Surface, Text as PaperText } from 'react-native-paper';
 
 import { initGameAction } from '../redux/actions/game.actions';
 
@@ -61,32 +61,31 @@ const GameScreen = () => {
                             setSelectedLanguage(itemValue);
                         }}
                         style={styles.picker}
-                        // itemStyle={styles.pickerItem} // Apply itemStyle to the Picker itself if supported for general item styling
                     >
                         <Picker.Item
                             label="Sanskrut - संस्कृत"
                             value={Locale.sanskrut}
-                            style={styles.pickerItem} // Apply to each item
+                            style={styles.pickerItem}
                         />
                         <Picker.Item
                             label="Hindi - हिंदी"
                             value={Locale.hindi}
-                            style={styles.pickerItem} // Apply to each item
+                            style={styles.pickerItem}
                         />
                         <Picker.Item
                             label="Marathi - मराठी"
                             value={Locale.marathi}
-                            style={styles.pickerItem} // Apply to each item
+                            style={styles.pickerItem}
                         />
                         <Picker.Item
                             label="Punjabi - ਪੰਜਾਬੀ"
                             value={Locale.punjabi}
-                            style={styles.pickerItem} // Apply to each item
+                            style={styles.pickerItem}
                         />
                         <Picker.Item
                             label="English - English"
                             value={Locale.english}
-                            style={styles.pickerItem} // Apply to each item
+                            style={styles.pickerItem}
                         />
                     </Picker>
                 </View>
@@ -114,7 +113,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        paddingTop: windowHeight * 0.12, // Increased paddingTop to shift content further down
+        paddingTop: windowHeight * 0.12,
         paddingHorizontal: 16,
         paddingBottom: 16,
     },
@@ -127,7 +126,7 @@ const styles = StyleSheet.create({
         width: BOARD_SIZE,
         maxWidth: BOARD_SIZE,
         alignSelf: 'center',
-        marginVertical: windowHeight * 0.02, // Adjusted from 0.015
+        marginVertical: windowHeight * 0.02,
     },
     instructionsText: {
         fontSize: windowWidth > 410 ? 18 : 16,
@@ -138,40 +137,31 @@ const styles = StyleSheet.create({
         width: BOARD_SIZE,
         maxWidth: BOARD_SIZE,
         alignSelf: 'center',
-        marginVertical: windowHeight * 0.025, // Adjusted from 0.02
+        marginVertical: windowHeight * 0.025,
     },
     pickerContainer: {
-        marginTop: windowHeight * 0.02, // Adjusted to be 2% of screen height
-        marginBottom: windowHeight * 0.01, // Adjusted to be 1% of screen height
+        marginTop: windowHeight * 0.02,
+        marginBottom: windowHeight * 0.01,
         alignItems: 'center',
-        borderWidth: 1, // Add border
-        borderColor: Colors.text, // Use a color from your theme, e.g., Colors.text or a specific border color
-        borderRadius: 8, // Optional: for rounded corners
-        width: windowWidth * 0.6, // Ensure container takes up the picker width
-        maxWidth: 250, // Ensure container takes up the picker maxwidth
+        borderWidth: 1,
+        borderColor: Colors.text,
+        borderRadius: 8,
+        width: windowWidth * 0.6,
+        maxWidth: 250,
     },
     picker: {
-        width: '100%', // Make picker fill the container
-        // For Android, centering text might need platform-specific handling or a custom dropdown component
-        // For iOS, itemStyle can be used, but Picker from @react-native-picker/picker might not support it directly for all platforms.
-        // textAlign: 'center', // This might not work directly on Picker items for all platforms
+        width: '100%',
     },
-    // Add this new style for Picker.Item if direct styling on Picker doesn't work for text alignment
     pickerItem: {
-        // This is a common way to attempt to style Picker items, but support varies.
-        textAlign: 'center', // This might not work.
-        // For Android, you often have to rely on the native appearance or use a custom component.
-        // Note: For some versions/platforms, you might need to wrap text in a <Text> component inside Picker.Item and style that.
+        textAlign: 'center',
     },
     footer: {
         justifyContent: 'center',
         alignItems: 'center',
         maxWidth: 414,
-        paddingVertical: windowHeight * 0.005, // Adjusted to be 0.5% of screen height
+        paddingVertical: windowHeight * 0.015,
     },
-    footerText: {
-        // color: Colors.text, // Color will come from Paper theme
-    },
+    footerText: {},
 });
 
 export default GameScreen;
