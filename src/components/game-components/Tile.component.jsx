@@ -1,11 +1,12 @@
 import React, { useRef } from 'react';
-import { Animated, Dimensions, StyleSheet } from 'react-native';
+import { Animated, Dimensions, StyleSheet, Platform } from 'react-native';
 import { Text as PaperText, useTheme } from 'react-native-paper';
 
 import Card from '../UI-components/Card.component';
 
 import * as UIUtils from '../../utils/UI.utils';
 import { getTranslatedNumber } from '../../utils/i18n.utils';
+import { TILE_SIZE, ANIMATION_DURATION, tilePosition as calcTilePos } from '../../constants/layout';
 
 const Tile = ({ tileData, rowIndex, colIndex }) => {
     const theme = useTheme();
@@ -27,8 +28,8 @@ const Tile = ({ tileData, rowIndex, colIndex }) => {
                 ...styles.emptyTile,
                 backgroundColor: theme.colors.emptyTile,
                 borderRadius: theme.roundness,
-                top: rowIndex * 81 + (rowIndex + 1) * 10,
-                left: colIndex * 81 + (colIndex + 1) * 10,
+                top: calcTilePos(rowIndex),
+                left: calcTilePos(colIndex),
             };
         }
     };
@@ -37,10 +38,8 @@ const Tile = ({ tileData, rowIndex, colIndex }) => {
 
     if (tileData) {
         const { currentPosition, previousPosition, isNew, isMerged } = tileData;
-        const targetX =
-            currentPosition.column * 81 + (currentPosition.column + 1) * 10;
-        const targetY =
-            currentPosition.row * 81 + (currentPosition.row + 1) * 10;
+        const targetX = calcTilePos(currentPosition.column);
+        const targetY = calcTilePos(currentPosition.row);
 
         const shouldAnimate =
             isNew ||
@@ -49,34 +48,23 @@ const Tile = ({ tileData, rowIndex, colIndex }) => {
             currentPosition.column !== previousPosition.column;
 
         if (shouldAnimate) {
-            // If it's a pure move (not new, not merged), set the starting point for the animation
-            // to its actual previous grid position.
             if (
                 !isNew &&
                 !isMerged &&
                 (currentPosition.row !== previousPosition.row ||
                     currentPosition.column !== previousPosition.column)
             ) {
-                const prevGridX =
-                    previousPosition.column * 81 +
-                    (previousPosition.column + 1) * 10;
-                const prevGridY =
-                    previousPosition.row * 81 + (previousPosition.row + 1) * 10;
+                const prevGridX = calcTilePos(previousPosition.column);
+                const prevGridY = calcTilePos(previousPosition.row);
                 tilePosition.setValue({ x: prevGridX, y: prevGridY });
             }
-            // For new or merged tiles, the animation will start from tilePosition's current value.
-            // If this Tile component instance was previously an empty slot, tilePosition is likely {x:0, y:0},
-            // so new tiles might appear to slide from the top-left. This change doesn't alter that specific animation
-            // but focuses on fixing disappearing static tiles.
 
             Animated.timing(tilePosition, {
                 toValue: { x: targetX, y: targetY },
-                duration: 100,
-                useNativeDriver: true,
+                duration: ANIMATION_DURATION,
+                useNativeDriver: Platform.OS !== 'web',
             }).start();
         } else {
-            // STATIC TILE: No animation is needed.
-            // Explicitly set its position to ensure it's not rendered at an incorrect default (like 0,0).
             tilePosition.setValue({ x: targetX, y: targetY });
         }
 
@@ -108,8 +96,8 @@ const Tile = ({ tileData, rowIndex, colIndex }) => {
 const styles = StyleSheet.create({
     container: {
         position: 'absolute',
-        width: 80,
-        height: 80,
+        width: TILE_SIZE,
+        height: TILE_SIZE,
     },
     emptyTile: {},
     tile: {

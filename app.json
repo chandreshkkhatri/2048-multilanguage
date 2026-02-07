@@ -28,7 +28,12 @@
             "targetSdkVersion": 35
         },
         "web": {
-            "favicon": "./assets/favicon.png"
+            "favicon": "./assets/favicon.png",
+            "bundler": "metro",
+            "output": "single",
+            "name": "2048 Multilanguage",
+            "backgroundColor": "#faf8ef",
+            "themeColor": "#E9A067"
         },
         "updates": {
             "fallbackToCacheTimeout": 0,

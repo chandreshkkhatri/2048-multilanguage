@@ -1,33 +1,32 @@
-import React, { useEffect } from 'react';
+import React, { useRef, useCallback } from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import GestureRecognizer from 'react-native-swipe-gestures';
 
-import {
-    makeMoveAction,
-    gameOverAction,
-} from '../../redux/actions/game.actions';
+import { makeMoveAction } from '../../redux/actions/game.actions';
 
 import Tile from '../game-components/Tile.component';
+import useKeyboardControls from '../../hooks/useKeyboardControls';
 
-import { moveTypes, checkIsGameOver } from '../../utils/game.utils';
-
+import { moveTypes } from '../../utils/game.utils';
+import { BOARD_SIZE, ANIMATION_DURATION } from '../../constants/layout';
 import Colors from '../../constants/colors';
 
 const windowWidth = Dimensions.get('window').width;
 
 const Board = () => {
     const boardState = useSelector((state) => state.game.board);
-
     const dispatch = useDispatch();
+    const isMoving = useRef(false);
 
-    const makeMove = (direction) =>
+    const makeMove = useCallback((direction) => {
+        if (isMoving.current) return;
+        isMoving.current = true;
         dispatch(makeMoveAction(direction));
+        setTimeout(() => { isMoving.current = false; }, ANIMATION_DURATION + 20);
+    }, [dispatch]);
 
-    useEffect(() => {
-        const isGameOver = checkIsGameOver(boardState);
-        if (isGameOver) dispatch(gameOverAction());
-    }, [dispatch, boardState]);
+    useKeyboardControls(makeMove, moveTypes);
 
     return (
         <GestureRecognizer
@@ -60,10 +59,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         position: 'relative',
-        width: 374,
-        maxWidth: 374,
+        width: BOARD_SIZE,
+        maxWidth: BOARD_SIZE,
         height: windowWidth - 40,
-        maxHeight: 374,
+        maxHeight: BOARD_SIZE,
         backgroundColor: Colors.board,
         borderRadius: 5,
     },

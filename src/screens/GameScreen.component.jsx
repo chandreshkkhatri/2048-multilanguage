@@ -7,20 +7,17 @@ import { Surface, Text as PaperText } from 'react-native-paper'; // Added Surfac
 import { initGameAction } from '../redux/actions/game.actions';
 
 import Header from '../components/UI-components/Header.component';
-// import CustomText from '../components/UI-components/CustomText.component'; // Replaced with PaperText
+
 import Board from '../components/game-components/Board.component';
 import GameOverModal from '../components/UI-components/GameOverModal.component';
 
 import Colors from '../constants/colors';
+import { BOARD_SIZE } from '../constants/layout';
 import i18n, { detectedLocale } from '../services/internationalization/i18n';
 import { Locale } from '../commons/types/i18n';
 
 const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height; // Get window height
-
-// Board width constants for consistent layout
-const BOARD_WIDTH = 374; // Updated to match Board.component.jsx actual width
-const BOARD_MAX_WIDTH = 374; // Updated to match Board.component.jsx actual width
+const windowHeight = Dimensions.get('window').height;
 
 const GameScreen = () => {
     const isGameOver = useSelector((state) => state.game.isGameOver);
@@ -127,8 +124,8 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     instructionsContainer: {
-        width: BOARD_WIDTH,
-        maxWidth: BOARD_MAX_WIDTH,
+        width: BOARD_SIZE,
+        maxWidth: BOARD_SIZE,
         alignSelf: 'center',
         marginVertical: windowHeight * 0.02, // Adjusted from 0.015
     },
@@ -138,8 +135,8 @@ const styles = StyleSheet.create({
     },
     boardContainer: {
         alignItems: 'center',
-        width: BOARD_WIDTH,
-        maxWidth: BOARD_MAX_WIDTH,
+        width: BOARD_SIZE,
+        maxWidth: BOARD_SIZE,
         alignSelf: 'center',
         marginVertical: windowHeight * 0.025, // Adjusted from 0.02
     },

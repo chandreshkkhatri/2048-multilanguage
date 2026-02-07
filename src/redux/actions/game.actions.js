@@ -10,7 +10,3 @@ export const makeMoveAction = (direction) => ({
         direction,
     },
 });
-
-export const gameOverAction = () => ({
-    type: gameActionTypes.GAME_OVER,
-});

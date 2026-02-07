@@ -21,15 +21,13 @@
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-native": "0.76.7",
-    "react-native-get-random-values": "~1.11.0",
+    "lodash": "^4.17.21",
     "react-native-paper": "^5.14.5",
     "react-native-safe-area-context": "~5.1.0",
     "react-native-screens": "~4.8.0",
     "react-native-swipe-gestures": "^1.0.5",
-    "react-native-vector-icons": "^10.2.0",
     "react-native-web": "~0.19.13",
-    "react-redux": "^9.2.0",
-    "uuid": "^9.0.0"
+    "react-redux": "^9.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.0"

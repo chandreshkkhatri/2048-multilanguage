@@ -24,16 +24,9 @@ export const moveTypes = {
     LEFT: 'LEFT',
 };
 
+const BOARD_LENGTH = 4;
+
 const getRandomNumber = (max) => Math.floor(Math.random() * max) + 1;
-
-const canRenderATile = (board) => {
-    for (let row = 0; row < board.length; row++) {
-        for (let col = 0; col < board[row].length; col++)
-            if (!board[row][col]) return true;
-    }
-
-    return false;
-};
 
 export const checkIsGameOver = (board) => {
     for (let row = 0; row < board.length; row++)
@@ -74,7 +67,7 @@ export const addNewTile = (board) => {
     return updatedBoard;
 };
 
-const isBoardEquales = (oldboard, updatedBoard) => {
+const isBoardEquals = (oldboard, updatedBoard) => {
     for (let row = 0; row < oldboard.length; row++) {
         for (let column = 0; column < oldboard[row].length; column++) {
             if (
@@ -102,408 +95,158 @@ const isBoardEquales = (oldboard, updatedBoard) => {
     return true;
 };
 
-const moveUp = (oldBoard) => {
+/**
+ * Unified movement function for all 4 directions.
+ *
+ * @param {Array} oldBoard - The current board state
+ * @param {Object} config - Direction configuration
+ * @param {Array} config.outerRange - Indices for the outer loop (rows or columns)
+ * @param {number} config.startPointer - Starting index for pointer1
+ * @param {number} config.endPointer - Starting index for pointer2
+ * @param {number} config.step - Direction of pointer movement (+1 or -1)
+ * @param {Function} config.isInBounds - (pointer) => boolean
+ * @param {Function} config.getCell - (outerIdx, pointer) => [row, col]
+ * @param {Function} config.makePosition - (outerIdx, pointer) => {row, column}
+ */
+const moveTiles = (oldBoard, config) => {
     let updatedBoard = cloneDeep(oldBoard);
     let aggregatedScore = 0;
 
-    for (let colIndex = 0; colIndex < updatedBoard.length; colIndex++) {
-        let pointer1 = 0,
-            pointer2 = 1;
+    const { outerRange, startPointer, endPointer, step, isInBounds, getCell, makePosition } = config;
 
-        while (pointer1 < updatedBoard.length) {
-            if (pointer2 === updatedBoard.length) {
-                pointer2 = pointer1 + 1;
-                pointer1++;
+    for (let i = 0; i < outerRange.length; i++) {
+        const outer = outerRange[i];
+        let pointer1 = startPointer;
+        let pointer2 = endPointer;
+
+        while (isInBounds(pointer1)) {
+            if (!isInBounds(pointer2)) {
+                pointer2 = pointer1 + step;
+                pointer1 += step;
                 continue;
             }
 
-            let tile1 = updatedBoard[pointer1][colIndex];
-            let tile2 = updatedBoard[pointer2][colIndex];
+            const [r1, c1] = getCell(outer, pointer1);
+            const [r2, c2] = getCell(outer, pointer2);
+            const tile1 = updatedBoard[r1][c1];
+            const tile2 = updatedBoard[r2][c2];
 
             if (tile1 === null && tile2 === null) {
-                pointer2++;
+                pointer2 += step;
                 continue;
             }
 
             if (tile1 !== null && tile2 === null) {
-                const tileData = {
+                updatedBoard[r1][c1] = {
                     ...tile1,
                     previousPosition: tile1.currentPosition,
                     isNew: false,
                     isMerged: false,
                 };
-                updatedBoard[pointer1][colIndex] = tileData;
-
-                pointer2++;
+                pointer2 += step;
                 continue;
             }
 
             if (tile1 === null && tile2 !== null) {
-                const tileData = {
+                updatedBoard[r1][c1] = {
                     ...tile2,
-                    currentPosition: { row: pointer1, column: colIndex },
-                    previousPosition: { row: pointer2, column: colIndex },
+                    currentPosition: makePosition(outer, pointer1),
+                    previousPosition: makePosition(outer, pointer2),
                     isNew: false,
                     isMerged: false,
                 };
-
-                updatedBoard[pointer1][colIndex] = tileData;
-                updatedBoard[pointer2][colIndex] = null;
-                pointer2++;
+                updatedBoard[r2][c2] = null;
+                pointer2 += step;
                 continue;
             }
 
-            if (tile1 !== null && tile2 !== null) {
-                if (tile1.number === tile2.number) {
-                    const tileNum = tile1.number * 2;
-
-                    const tileData = {
-                        number: tileNum,
-                        currentPosition: tile1.currentPosition,
-                        previousPosition: tile2.currentPosition,
-                        isNew: false,
-                        isMerged: true,
-                    };
-
-                    updatedBoard[pointer1][colIndex] = tileData;
-                    updatedBoard[pointer2][colIndex] = null;
-                    aggregatedScore += tileNum;
-                    pointer2 = pointer1 + 1;
-                    pointer1++;
-                    continue;
-                }
-
-                const tile1Data = {
-                    ...tile1,
-                    previousPosition: tile1.currentPosition,
-                    isNew: false,
-                    isMerged: false,
-                };
-                const tile2Data = {
-                    ...tile2,
+            // Both tiles are non-null
+            if (tile1.number === tile2.number) {
+                const tileNum = tile1.number * 2;
+                updatedBoard[r1][c1] = {
+                    number: tileNum,
+                    currentPosition: tile1.currentPosition,
                     previousPosition: tile2.currentPosition,
                     isNew: false,
-                    isMerged: false,
+                    isMerged: true,
                 };
-
-                updatedBoard[pointer1][colIndex] = tile1Data;
-                updatedBoard[pointer2][colIndex] = tile2Data;
-
-                pointer1++;
-                pointer2 = pointer1 + 1;
+                updatedBoard[r2][c2] = null;
+                aggregatedScore += tileNum;
+                pointer2 = pointer1 + step;
+                pointer1 += step;
                 continue;
             }
+
+            // Different numbers — mark both, advance
+            updatedBoard[r1][c1] = {
+                ...tile1,
+                previousPosition: tile1.currentPosition,
+                isNew: false,
+                isMerged: false,
+            };
+            updatedBoard[r2][c2] = {
+                ...tile2,
+                previousPosition: tile2.currentPosition,
+                isNew: false,
+                isMerged: false,
+            };
+            pointer1 += step;
+            pointer2 = pointer1 + step;
         }
     }
 
-    if (!isBoardEquales(oldBoard, updatedBoard))
+    if (!isBoardEquals(oldBoard, updatedBoard))
         updatedBoard = addNewTile(updatedBoard);
 
     return { updatedBoard, aggregatedScore };
 };
 
-const moveDown = (oldBoard) => {
-    let updatedBoard = cloneDeep(oldBoard);
-    let aggregatedScore = 0;
+// Direction configurations
+const range = [0, 1, 2, 3];
 
-    for (let colIndex = updatedBoard.length - 1; colIndex >= 0; colIndex--) {
-        let pointer1 = updatedBoard.length - 1,
-            pointer2 = pointer1 - 1;
+const moveUp = (board) =>
+    moveTiles(board, {
+        outerRange: range,
+        startPointer: 0,
+        endPointer: 1,
+        step: 1,
+        isInBounds: (p) => p < BOARD_LENGTH,
+        getCell: (col, ptr) => [ptr, col],
+        makePosition: (col, ptr) => ({ row: ptr, column: col }),
+    });
 
-        while (pointer1 > 0) {
-            if (pointer2 === -1) {
-                pointer2 = pointer1 - 1;
-                pointer1--;
-                continue;
-            }
+const moveDown = (board) =>
+    moveTiles(board, {
+        outerRange: range,
+        startPointer: BOARD_LENGTH - 1,
+        endPointer: BOARD_LENGTH - 2,
+        step: -1,
+        isInBounds: (p) => p >= 0,
+        getCell: (col, ptr) => [ptr, col],
+        makePosition: (col, ptr) => ({ row: ptr, column: col }),
+    });
 
-            let tile1 = updatedBoard[pointer1][colIndex];
-            let tile2 = updatedBoard[pointer2][colIndex];
+const moveLeft = (board) =>
+    moveTiles(board, {
+        outerRange: range,
+        startPointer: 0,
+        endPointer: 1,
+        step: 1,
+        isInBounds: (p) => p < BOARD_LENGTH,
+        getCell: (row, ptr) => [row, ptr],
+        makePosition: (row, ptr) => ({ row, column: ptr }),
+    });
 
-            if (tile1 === null && tile2 === null) {
-                pointer2--;
-                continue;
-            }
-
-            if (tile1 !== null && tile2 === null) {
-                const tileData = {
-                    ...tile1,
-                    previousPosition: tile1.currentPosition,
-                    isNew: false,
-                    isMerged: false,
-                };
-                updatedBoard[pointer1][colIndex] = tileData;
-
-                pointer2--;
-                continue;
-            }
-
-            if (tile1 === null && tile2 !== null) {
-                const tileData = {
-                    ...tile2,
-                    currentPosition: { row: pointer1, column: colIndex },
-                    previousPosition: { row: pointer2, column: colIndex },
-                    isNew: false,
-                    isMerged: false,
-                };
-
-                updatedBoard[pointer1][colIndex] = tileData;
-                updatedBoard[pointer2][colIndex] = null;
-                pointer2--;
-                continue;
-            }
-
-            if (tile1 !== null && tile2 !== null) {
-                if (tile1.number === tile2.number) {
-                    const tileNum = tile1.number * 2;
-
-                    const tileData = {
-                        number: tileNum,
-                        currentPosition: tile1.currentPosition,
-                        previousPosition: tile2.currentPosition,
-                        isNew: false,
-                        isMerged: true,
-                    };
-
-                    updatedBoard[pointer1][colIndex] = tileData;
-                    updatedBoard[pointer2][colIndex] = null;
-                    aggregatedScore += tileNum;
-                    pointer2 = pointer1 - 1;
-                    pointer1--;
-                    continue;
-                }
-
-                const tile1Data = {
-                    ...tile1,
-                    previousPosition: tile1.currentPosition,
-                    isNew: false,
-                    isMerged: false,
-                };
-                const tile2Data = {
-                    ...tile2,
-                    previousPosition: tile2.currentPosition,
-                    isNew: false,
-                    isMerged: false,
-                };
-
-                updatedBoard[pointer1][colIndex] = tile1Data;
-                updatedBoard[pointer2][colIndex] = tile2Data;
-
-                pointer1--;
-                pointer2 = pointer1 - 1;
-                continue;
-            }
-        }
-    }
-
-    if (!isBoardEquales(oldBoard, updatedBoard))
-        updatedBoard = addNewTile(updatedBoard);
-
-    return { updatedBoard, aggregatedScore };
-};
-
-const moveRight = (oldBoard) => {
-    let updatedBoard = cloneDeep(oldBoard);
-    let aggregatedScore = 0;
-
-    for (let rowIndex = updatedBoard.length - 1; rowIndex >= 0; rowIndex--) {
-        const row = updatedBoard[rowIndex];
-        let pointer1 = updatedBoard.length - 1,
-            pointer2 = pointer1 - 1;
-
-        while (pointer1 > 0) {
-            if (pointer2 === -1) {
-                pointer2 = pointer1 - 1;
-                pointer1--;
-                continue;
-            }
-
-            let tile1 = row[pointer1];
-            let tile2 = row[pointer2];
-
-            if (tile1 === null && tile2 === null) {
-                pointer2--;
-                continue;
-            }
-
-            if (tile1 !== null && tile2 === null) {
-                const tileData = {
-                    ...tile1,
-                    previousPosition: tile1.currentPosition,
-                    isNew: false,
-                    isMerged: false,
-                };
-                row[pointer1] = tileData;
-
-                pointer2--;
-                continue;
-            }
-
-            if (tile1 === null && tile2 !== null) {
-                const tileData = {
-                    ...tile2,
-                    currentPosition: { row: rowIndex, column: pointer1 },
-                    previousPosition: { row: rowIndex, column: pointer2 },
-                    isNew: false,
-                    isMerged: false,
-                };
-
-                row[pointer1] = tileData;
-                row[pointer2] = null;
-                pointer2--;
-                continue;
-            }
-
-            if (tile1 !== null && tile2 !== null) {
-                if (tile1.number === tile2.number) {
-                    const tileNum = tile1.number * 2;
-
-                    const tileData = {
-                        number: tileNum,
-                        currentPosition: tile1.currentPosition,
-                        previousPosition: tile2.currentPosition,
-                        isNew: false,
-                        isMerged: true,
-                    };
-
-                    row[pointer1] = tileData;
-                    row[pointer2] = null;
-                    aggregatedScore += tileNum;
-                    pointer2 = pointer1 - 1;
-                    pointer1--;
-                    continue;
-                }
-
-                const tile1Data = {
-                    ...tile1,
-                    previousPosition: tile1.currentPosition,
-                    isNew: false,
-                    isMerged: false,
-                };
-                const tile2Data = {
-                    ...tile2,
-                    previousPosition: tile2.currentPosition,
-                    isNew: false,
-                    isMerged: false,
-                };
-
-                row[pointer1] = tile1Data;
-                row[pointer2] = tile2Data;
-
-                pointer1--;
-                pointer2 = pointer1 - 1;
-                continue;
-            }
-        }
-    }
-
-    if (!isBoardEquales(oldBoard, updatedBoard))
-        updatedBoard = addNewTile(updatedBoard);
-
-    return { updatedBoard, aggregatedScore };
-};
-
-const moveLeft = (oldBoard) => {
-    let updatedBoard = cloneDeep(oldBoard);
-    let aggregatedScore = 0;
-
-    for (let rowIndex = 0; rowIndex < updatedBoard.length; rowIndex++) {
-        const row = updatedBoard[rowIndex];
-        let pointer1 = 0,
-            pointer2 = 1;
-
-        while (pointer1 < updatedBoard.length) {
-            if (pointer2 === updatedBoard.length) {
-                pointer2 = pointer1 + 1;
-                pointer1++;
-                continue;
-            }
-
-            let tile1 = row[pointer1];
-            let tile2 = row[pointer2];
-
-            if (tile1 === null && tile2 === null) {
-                pointer2++;
-                continue;
-            }
-
-            if (tile1 !== null && tile2 === null) {
-                const tileData = {
-                    ...tile1,
-                    previousPosition: { ...tile1.currentPosition },
-                    isNew: false,
-                    isMerged: false,
-                };
-
-                row[pointer1] = tileData;
-
-                pointer2++;
-                continue;
-            }
-
-            if (tile1 === null && tile2 !== null) {
-                const tileData = {
-                    ...tile2,
-                    currentPosition: { row: rowIndex, column: pointer1 },
-                    previousPosition: { row: rowIndex, column: pointer2 },
-                    isNew: false,
-                    isMerged: false,
-                };
-
-                row[pointer1] = tileData;
-                row[pointer2] = null;
-                pointer2++;
-                continue;
-            }
-
-            if (tile1 !== null && tile2 !== null) {
-                if (tile1.number === tile2.number) {
-                    const tileNum = tile1.number * 2;
-
-                    const tileData = {
-                        number: tileNum,
-                        currentPosition: tile1.currentPosition,
-                        previousPosition: tile2.currentPosition,
-                        isNew: false,
-                        isMerged: true,
-                    };
-
-                    row[pointer1] = tileData;
-                    row[pointer2] = null;
-                    aggregatedScore += tileNum;
-                    pointer2 = pointer1 + 1;
-                    pointer1++;
-                    continue;
-                }
-
-                const tile1Data = {
-                    ...tile1,
-                    previousPosition: tile1.currentPosition,
-                    isNew: false,
-                    isMerged: false,
-                };
-                const tile2Data = {
-                    ...tile2,
-                    previousPosition: tile2.currentPosition,
-                    isNew: false,
-                    isMerged: false,
-                };
-
-                row[pointer1] = tile1Data;
-                row[pointer2] = tile2Data;
-
-                pointer1++;
-                pointer2 = pointer1 + 1;
-                continue;
-            }
-        }
-    }
-
-    if (!isBoardEquales(oldBoard, updatedBoard))
-        updatedBoard = addNewTile(updatedBoard);
-
-    return { updatedBoard, aggregatedScore };
-};
+const moveRight = (board) =>
+    moveTiles(board, {
+        outerRange: range,
+        startPointer: BOARD_LENGTH - 1,
+        endPointer: BOARD_LENGTH - 2,
+        step: -1,
+        isInBounds: (p) => p >= 0,
+        getCell: (row, ptr) => [row, ptr],
+        makePosition: (row, ptr) => ({ row, column: ptr }),
+    });
 
 export const makeMove = (board, direction) => {
     switch (direction) {
