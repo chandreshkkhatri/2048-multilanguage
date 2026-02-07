@@ -39,6 +39,7 @@
                 "projectId": "36e7f8cf-f2b8-47cc-9f2c-1e6b1160ff53"
             }
         },
+        "newArchEnabled": false,
         "owner": "chandresh.code",
         "runtimeVersion": {
             "policy": "sdkVersion"
