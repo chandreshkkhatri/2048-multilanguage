@@ -15,7 +15,6 @@ import i18n from '../../services/internationalization/i18n';
 import { getTranslatedNumber } from '../../utils/i18n.utils';
 
 const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
 
 const Header = () => {
     const gameScore = useSelector((state) => state.game.score);
@@ -94,9 +93,9 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     logo: {
-        width: 120,
-        height: windowHeight * 0.15,
-        maxHeight: 120,
+        width: BOARD_SIZE * 0.28,
+        height: BOARD_SIZE * 0.25,
+        maxHeight: 100,
         justifyContent: 'center',
         alignItems: 'center',
         flexShrink: 0,
@@ -110,7 +109,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '100%',
-        marginBottom: windowHeight * 0.01,
+        marginBottom: 4,
     },
     buttonsContainer: {
         flexDirection: 'row',
@@ -124,7 +123,7 @@ const styles = StyleSheet.create({
         fontSize: windowWidth > 360 ? 16 : 14,
     },
     logoText: {
-        fontSize: windowWidth > 360 ? (windowHeight > 600 ? 40 : 35) : 30,
+        fontSize: Math.max(24, Math.round(BOARD_SIZE * 0.09)),
     },
 });
 

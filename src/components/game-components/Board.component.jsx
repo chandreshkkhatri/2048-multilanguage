@@ -1,5 +1,5 @@
 import React, { useRef, useCallback } from 'react';
-import { Dimensions, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import GestureRecognizer from 'react-native-swipe-gestures';
 
@@ -11,8 +11,6 @@ import useKeyboardControls from '../../hooks/useKeyboardControls';
 import { moveTypes } from '../../utils/game.utils';
 import { BOARD_SIZE, ANIMATION_DURATION } from '../../constants/layout';
 import Colors from '../../constants/colors';
-
-const windowWidth = Dimensions.get('window').width;
 
 const Board = () => {
     const boardState = useSelector((state) => state.game.board);
@@ -60,9 +58,7 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         position: 'relative',
         width: BOARD_SIZE,
-        maxWidth: BOARD_SIZE,
-        height: windowWidth - 40,
-        maxHeight: BOARD_SIZE,
+        height: BOARD_SIZE,
         backgroundColor: Colors.board,
         borderRadius: 8,
     },

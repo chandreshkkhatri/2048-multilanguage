@@ -113,9 +113,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        paddingTop: windowHeight * 0.12,
+        paddingTop: windowHeight * 0.03,
         paddingHorizontal: 16,
-        paddingBottom: 16,
+        paddingBottom: 8,
     },
     mainContent: {
         flex: 1,
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
         width: BOARD_SIZE,
         maxWidth: BOARD_SIZE,
         alignSelf: 'center',
-        marginVertical: windowHeight * 0.02,
+        marginVertical: 4,
     },
     instructionsText: {
         fontSize: windowWidth > 410 ? 18 : 16,
@@ -137,11 +137,11 @@ const styles = StyleSheet.create({
         width: BOARD_SIZE,
         maxWidth: BOARD_SIZE,
         alignSelf: 'center',
-        marginVertical: windowHeight * 0.025,
+        marginVertical: windowHeight * 0.01,
     },
     pickerContainer: {
-        marginTop: windowHeight * 0.02,
-        marginBottom: windowHeight * 0.01,
+        marginTop: windowHeight * 0.01,
+        marginBottom: windowHeight * 0.005,
         alignItems: 'center',
         borderWidth: 1,
         borderColor: Colors.text,
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         maxWidth: 414,
-        paddingVertical: windowHeight * 0.015,
+        paddingVertical: windowHeight * 0.005,
     },
     footerText: {},
 });

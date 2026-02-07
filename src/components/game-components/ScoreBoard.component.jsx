@@ -22,19 +22,19 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         width: '45%',
-        height: windowHeight * 0.14, // Increased from 0.12 to 0.14
-        maxHeight: 100, // Increased from 90 to 100
+        height: windowHeight * 0.09,
+        maxHeight: 70,
         backgroundColor: Colors.scoreBoard,
         justifyContent: 'center',
-        paddingVertical: 8, // Increased padding
+        paddingVertical: 4,
     },
     title: {
-        fontSize: windowWidth > 410 ? 18 : 14, // Further reduced from 20:16
+        fontSize: windowWidth > 410 ? 16 : 13,
         textAlign: 'center',
-        marginBottom: 4,
+        marginBottom: 2,
     },
     score: {
-        fontSize: windowWidth > 410 ? 22 : 18, // Further reduced from 26:20
+        fontSize: windowWidth > 410 ? 20 : 16,
         textAlign: 'center',
         fontWeight: 'bold',
     },

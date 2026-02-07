@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { Animated, Dimensions, StyleSheet, Platform } from 'react-native';
+import { Animated, StyleSheet, Platform } from 'react-native';
 import { Text as PaperText, useTheme } from 'react-native-paper';
 
 import Card from '../UI-components/Card.component';
@@ -75,10 +75,7 @@ const Tile = ({ tileData, rowIndex, colIndex }) => {
             <PaperText
                 style={{
                     ...styles.tileNumber,
-                    ...UIUtils.getTextStyle(
-                        tileData.number,
-                        Dimensions.get('window').width
-                    ),
+                    ...UIUtils.getTextStyle(tileData.number),
                 }}
             >
                 {getTranslatedNumber(tileData.number)}
