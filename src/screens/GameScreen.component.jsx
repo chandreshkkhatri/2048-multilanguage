@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Dimensions, StyleSheet, SafeAreaView, View } from 'react-native';
+import { Dimensions, Linking, StyleSheet, SafeAreaView, View } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { useSelector, useDispatch } from 'react-redux';
 import { Surface, Text as PaperText } from 'react-native-paper';
@@ -94,6 +94,12 @@ const GameScreen = () => {
                     <View style={styles.footer}>
                         <PaperText style={styles.footerText}>
                             {i18n.t('developedBy')}
+                            <PaperText
+                                style={styles.footerLink}
+                                onPress={() => Linking.openURL('https://www.karmalok.com')}
+                            >
+                                {i18n.t('developerName')}
+                            </PaperText>
                         </PaperText>
                     </View>
                 </View>
@@ -165,6 +171,10 @@ const styles = StyleSheet.create({
         paddingVertical: 4,
     },
     footerText: {},
+    footerLink: {
+        color: Colors.button,
+        textDecorationLine: 'underline',
+    },
 });
 
 export default GameScreen;
