@@ -21,7 +21,7 @@
         "android": {
             "adaptiveIcon": {
                 "foregroundImage": "./assets/adaptive-icon.png",
-                "backgroundColor": "#ffffff"
+                "backgroundColor": "#E7B723"
             },
             "package": "com.karmalok.multilingual2048",
             "versionCode": 2,
