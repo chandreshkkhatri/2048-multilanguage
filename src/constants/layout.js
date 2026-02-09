@@ -7,7 +7,7 @@ export const ANIMATION_DURATION = 100; // ms
 
 // Board fits within screen width (with padding) and caps vertical usage
 const widthBudget = windowWidth - 32;     // 16px padding each side
-const heightBudget = windowHeight * 0.48; // leave ~52% for header/footer/picker
+const heightBudget = windowHeight * 0.52; // leave ~48% for header/footer/picker
 const rawSize = Math.min(widthBudget, heightBudget, 500);
 
 export const TILE_GAP = Math.max(4, Math.round(rawSize * 0.027));

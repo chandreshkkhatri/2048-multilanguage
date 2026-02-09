@@ -51,49 +51,51 @@ const GameScreen = () => {
                     <View style={styles.boardContainer}>
                         <Board />
                     </View>
-                </View>
 
-                <View style={styles.pickerContainer}>
-                    <Picker
-                        selectedValue={selectedLanguage}
-                        onValueChange={(itemValue, itemIndex) => {
-                            i18n.locale = itemValue;
-                            setSelectedLanguage(itemValue);
-                        }}
-                        style={styles.picker}
-                    >
-                        <Picker.Item
-                            label="Sanskrut - संस्कृत"
-                            value={Locale.sanskrut}
-                            style={styles.pickerItem}
-                        />
-                        <Picker.Item
-                            label="Hindi - हिंदी"
-                            value={Locale.hindi}
-                            style={styles.pickerItem}
-                        />
-                        <Picker.Item
-                            label="Marathi - मराठी"
-                            value={Locale.marathi}
-                            style={styles.pickerItem}
-                        />
-                        <Picker.Item
-                            label="Punjabi - ਪੰਜਾਬੀ"
-                            value={Locale.punjabi}
-                            style={styles.pickerItem}
-                        />
-                        <Picker.Item
-                            label="English - English"
-                            value={Locale.english}
-                            style={styles.pickerItem}
-                        />
-                    </Picker>
-                </View>
+                    <View style={{ flex: 1 }} />
 
-                <View style={styles.footer}>
-                    <PaperText style={styles.footerText}>
-                        {i18n.t('developedBy')}
-                    </PaperText>
+                    <View style={styles.pickerContainer}>
+                        <Picker
+                            selectedValue={selectedLanguage}
+                            onValueChange={(itemValue, itemIndex) => {
+                                i18n.locale = itemValue;
+                                setSelectedLanguage(itemValue);
+                            }}
+                            style={styles.picker}
+                        >
+                            <Picker.Item
+                                label="Sanskrut - संस्कृत"
+                                value={Locale.sanskrut}
+                                style={styles.pickerItem}
+                            />
+                            <Picker.Item
+                                label="Hindi - हिंदी"
+                                value={Locale.hindi}
+                                style={styles.pickerItem}
+                            />
+                            <Picker.Item
+                                label="Marathi - मराठी"
+                                value={Locale.marathi}
+                                style={styles.pickerItem}
+                            />
+                            <Picker.Item
+                                label="Punjabi - ਪੰਜਾਬੀ"
+                                value={Locale.punjabi}
+                                style={styles.pickerItem}
+                            />
+                            <Picker.Item
+                                label="English - English"
+                                value={Locale.english}
+                                style={styles.pickerItem}
+                            />
+                        </Picker>
+                    </View>
+
+                    <View style={styles.footer}>
+                        <PaperText style={styles.footerText}>
+                            {i18n.t('developedBy')}
+                        </PaperText>
+                    </View>
                 </View>
 
                 <GameOverModal
@@ -113,9 +115,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        paddingTop: windowHeight * 0.03,
+        paddingTop: windowHeight * 0.06 + 25,
         paddingHorizontal: 16,
-        paddingBottom: 8,
+        paddingBottom: windowHeight * 0.04,
     },
     mainContent: {
         flex: 1,
@@ -126,7 +128,7 @@ const styles = StyleSheet.create({
         width: BOARD_SIZE,
         maxWidth: BOARD_SIZE,
         alignSelf: 'center',
-        marginVertical: 4,
+        marginVertical: 16,
     },
     instructionsText: {
         fontSize: windowWidth > 410 ? 18 : 16,
@@ -137,11 +139,12 @@ const styles = StyleSheet.create({
         width: BOARD_SIZE,
         maxWidth: BOARD_SIZE,
         alignSelf: 'center',
-        marginVertical: windowHeight * 0.01,
+        marginTop: 16,
+        marginBottom: 0,
     },
     pickerContainer: {
-        marginTop: windowHeight * 0.01,
-        marginBottom: windowHeight * 0.005,
+        marginTop: 0,
+        marginBottom: 8,
         alignItems: 'center',
         borderWidth: 1,
         borderColor: Colors.text,
@@ -159,7 +162,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         maxWidth: 414,
-        paddingVertical: windowHeight * 0.005,
+        paddingVertical: 4,
     },
     footerText: {},
 });
