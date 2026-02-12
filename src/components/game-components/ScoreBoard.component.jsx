@@ -1,15 +1,15 @@
 import React from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
-import { Card as PaperCard, Text as PaperText } from 'react-native-paper';
-
-import Colors from '../../constants/colors';
+import { Card as PaperCard, Text as PaperText, useTheme } from 'react-native-paper';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const ScoreBoard = ({ title, score }) => {
+    const theme = useTheme();
+
     return (
-        <PaperCard style={styles.container}>
+        <PaperCard style={[styles.container, { backgroundColor: theme.colors.scoreBoard }]}>
             <PaperCard.Content>
                 <PaperText style={styles.title}>{title}</PaperText>
                 <PaperText style={styles.score}>{score}</PaperText>
@@ -24,7 +24,6 @@ const styles = StyleSheet.create({
         width: '45%',
         height: windowHeight * 0.09,
         maxHeight: 70,
-        backgroundColor: Colors.scoreBoard,
         justifyContent: 'center',
         paddingVertical: 4,
     },

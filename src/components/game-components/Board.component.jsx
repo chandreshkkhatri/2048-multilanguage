@@ -1,5 +1,6 @@
 import React, { useRef, useCallback } from 'react';
 import { StyleSheet } from 'react-native';
+import { useTheme } from 'react-native-paper';
 import { useSelector, useDispatch } from 'react-redux';
 import GestureRecognizer from 'react-native-swipe-gestures';
 
@@ -10,9 +11,9 @@ import useKeyboardControls from '../../hooks/useKeyboardControls';
 
 import { moveTypes } from '../../utils/game.utils';
 import { BOARD_SIZE, ANIMATION_DURATION } from '../../constants/layout';
-import Colors from '../../constants/colors';
 
 const Board = () => {
+    const theme = useTheme();
     const boardState = useSelector((state) => state.game.board);
     const dispatch = useDispatch();
     const isMoving = useRef(false);
@@ -21,7 +22,7 @@ const Board = () => {
         if (isMoving.current) return;
         isMoving.current = true;
         dispatch(makeMoveAction(direction));
-        setTimeout(() => { isMoving.current = false; }, ANIMATION_DURATION + 20);
+        setTimeout(() => { isMoving.current = false; }, ANIMATION_DURATION + 80);
     }, [dispatch]);
 
     useKeyboardControls(makeMove, moveTypes);
@@ -32,8 +33,8 @@ const Board = () => {
             onSwipeDown={() => makeMove(moveTypes.DOWN)}
             onSwipeRight={() => makeMove(moveTypes.RIGHT)}
             onSwipeLeft={() => makeMove(moveTypes.LEFT)}
-            style={styles.container}
-            config={{ velocityThreshold: 0, directionalOffsetThreshold: 80 }}
+            style={[styles.container, { backgroundColor: theme.colors.board }]}
+            config={{ velocityThreshold: 0.2, directionalOffsetThreshold: 80 }}
         >
             {boardState.map((row, rowIndex) =>
                 row.map((tile, colIndex) =>
@@ -59,7 +60,6 @@ const styles = StyleSheet.create({
         position: 'relative',
         width: BOARD_SIZE,
         height: BOARD_SIZE,
-        backgroundColor: Colors.board,
         borderRadius: 8,
     },
 });

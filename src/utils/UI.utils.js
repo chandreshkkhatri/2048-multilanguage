@@ -53,7 +53,7 @@ export const getTextStyle = (number) => {
     };
 
     return {
-        color: number > 4 ? 'white' : Colors.text,
+        color: number > 4 ? 'white' : '#776e65',
         fontSize: getFontSize(),
         fontWeight: 'bold',
     };

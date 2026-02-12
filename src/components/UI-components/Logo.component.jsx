@@ -16,7 +16,7 @@ const Logo = ({ containerStyle, textStyle }) => {
             padding: 5,
         },
         text: {
-            color: '#776e65',
+            color: theme.colors.text,
             fontSize: 20,
         },
     });

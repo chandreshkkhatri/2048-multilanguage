@@ -7,17 +7,17 @@ import {
     Text as PaperText,
     Button as PaperButton,
     Surface,
+    useTheme,
 } from 'react-native-paper';
 
 import Logo from './Logo.component';
-
-import Colors from '../../constants/colors';
 import i18n from '../../services/internationalization/i18n';
 import { getTranslatedNumber } from '../../utils/i18n.utils';
 
 const windowWidth = Dimensions.get('window').width;
 
 const GameOverModal = ({ visible, onPressFunction }) => {
+    const theme = useTheme();
     const score = useSelector((state) => state.game.score);
 
     return (
@@ -25,7 +25,7 @@ const GameOverModal = ({ visible, onPressFunction }) => {
             <PaperModal
                 visible={visible}
                 onDismiss={onPressFunction}
-                contentContainerStyle={styles.modalContainer}
+                contentContainerStyle={[styles.modalContainer, { backgroundColor: theme.colors.background }]}
             >
                 <Surface style={styles.surface}>
                     <Logo
@@ -53,7 +53,6 @@ const GameOverModal = ({ visible, onPressFunction }) => {
 
 const styles = StyleSheet.create({
     modalContainer: {
-        backgroundColor: Colors.background,
         padding: 20,
         margin: 20,
         borderRadius: 8,

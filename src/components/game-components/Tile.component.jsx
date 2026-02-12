@@ -11,6 +11,7 @@ import { TILE_SIZE, ANIMATION_DURATION, tilePosition as calcTilePos } from '../.
 const Tile = ({ tileData, rowIndex, colIndex }) => {
     const theme = useTheme();
     const tilePosition = useRef(new Animated.ValueXY()).current;
+    const scaleAnim = useRef(new Animated.Value(1)).current;
 
     useEffect(() => {
         if (!tileData) return;
@@ -19,24 +20,46 @@ const Tile = ({ tileData, rowIndex, colIndex }) => {
         const targetX = calcTilePos(currentPosition.column);
         const targetY = calcTilePos(currentPosition.row);
 
-        const shouldAnimate =
-            isNew ||
-            isMerged ||
+        if (isNew) {
+            tilePosition.setValue({ x: targetX, y: targetY });
+            scaleAnim.setValue(0);
+            const anim = Animated.timing(scaleAnim, {
+                toValue: 1,
+                duration: ANIMATION_DURATION,
+                useNativeDriver: Platform.OS !== 'web',
+            });
+            anim.start();
+            return () => anim.stop();
+        }
+
+        if (isMerged) {
+            tilePosition.setValue({ x: targetX, y: targetY });
+            scaleAnim.setValue(1);
+            const anim = Animated.sequence([
+                Animated.timing(scaleAnim, {
+                    toValue: 1.15,
+                    duration: ANIMATION_DURATION / 2,
+                    useNativeDriver: Platform.OS !== 'web',
+                }),
+                Animated.timing(scaleAnim, {
+                    toValue: 1,
+                    duration: ANIMATION_DURATION / 2,
+                    useNativeDriver: Platform.OS !== 'web',
+                }),
+            ]);
+            anim.start();
+            return () => anim.stop();
+        }
+
+        const hasMoved =
             currentPosition.row !== previousPosition.row ||
             currentPosition.column !== previousPosition.column;
 
-        if (shouldAnimate) {
-            if (
-                !isNew &&
-                !isMerged &&
-                (currentPosition.row !== previousPosition.row ||
-                    currentPosition.column !== previousPosition.column)
-            ) {
-                const prevGridX = calcTilePos(previousPosition.column);
-                const prevGridY = calcTilePos(previousPosition.row);
-                tilePosition.setValue({ x: prevGridX, y: prevGridY });
-            }
-
+        if (hasMoved) {
+            tilePosition.setValue({
+                x: calcTilePos(previousPosition.column),
+                y: calcTilePos(previousPosition.row),
+            });
             const anim = Animated.timing(tilePosition, {
                 toValue: { x: targetX, y: targetY },
                 duration: ANIMATION_DURATION,
@@ -44,9 +67,9 @@ const Tile = ({ tileData, rowIndex, colIndex }) => {
             });
             anim.start();
             return () => anim.stop();
-        } else {
-            tilePosition.setValue({ x: targetX, y: targetY });
         }
+
+        tilePosition.setValue({ x: targetX, y: targetY });
     }, [tileData]);
 
     if (!tileData) {
@@ -67,7 +90,7 @@ const Tile = ({ tileData, rowIndex, colIndex }) => {
         zIndex: 100,
         backgroundColor: UIUtils.getTileColor(tileData.number),
         borderRadius: theme.roundness,
-        transform: tilePosition.getTranslateTransform(),
+        transform: [...tilePosition.getTranslateTransform(), { scale: scaleAnim }],
     };
 
     return (

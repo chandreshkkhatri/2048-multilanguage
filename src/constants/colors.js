@@ -1,10 +1,4 @@
-const Colors = {
-    background: '#faf8ef',
-    text: '#776e65',
-    button: '#E9A067',
-    scoreBoard: '#C2B3A3',
-    board: '#C2B3A3',
-    emptyTile: '#cdc1b4',
+const SharedTileColors = {
     tile2: '#EBDCD0',
     tile4: '#E9DBBA',
     tile8: '#E9A067',
@@ -21,4 +15,24 @@ const Colors = {
     tile16384: '#CC0000',
 };
 
-export default Colors;
+export const LightColors = {
+    background: '#faf8ef',
+    text: '#776e65',
+    button: '#E9A067',
+    scoreBoard: '#C2B3A3',
+    board: '#C2B3A3',
+    emptyTile: '#cdc1b4',
+    ...SharedTileColors,
+};
+
+export const DarkColors = {
+    background: '#1c1c1e',
+    text: '#e8e0d8',
+    button: '#E9A067',
+    scoreBoard: '#3a3530',
+    board: '#3a3530',
+    emptyTile: '#4a4440',
+    ...SharedTileColors,
+};
+
+export default LightColors;
