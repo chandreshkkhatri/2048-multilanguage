@@ -225,7 +225,7 @@ const moveDown = (board) =>
         startPointer: BOARD_LENGTH - 1,
         endPointer: BOARD_LENGTH - 2,
         step: -1,
-        isInBounds: (p) => p > 0,
+        isInBounds: (p) => p >= 0,
         getCell: (col, ptr) => [ptr, col],
         makePosition: (col, ptr) => ({ row: ptr, column: col }),
     });
@@ -247,7 +247,7 @@ const moveRight = (board) =>
         startPointer: BOARD_LENGTH - 1,
         endPointer: BOARD_LENGTH - 2,
         step: -1,
-        isInBounds: (p) => p > 0,
+        isInBounds: (p) => p >= 0,
         getCell: (row, ptr) => [row, ptr],
         makePosition: (row, ptr) => ({ row, column: ptr }),
     });

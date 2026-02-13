@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "expo start --go",
-    "start:dev": "APP_VARIANT=development expo start --dev-client",
+    "start:dev": "APP_VARIANT=development expo start --dev-client --tunnel",
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web"

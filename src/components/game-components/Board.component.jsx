@@ -34,7 +34,7 @@ const Board = () => {
             onSwipeRight={() => makeMove(moveTypes.RIGHT)}
             onSwipeLeft={() => makeMove(moveTypes.LEFT)}
             style={[styles.container, { backgroundColor: theme.colors.board }]}
-            config={{ velocityThreshold: 0.2, directionalOffsetThreshold: 80 }}
+            config={{ velocityThreshold: 0.25, directionalOffsetThreshold: 80 }}
         >
             {boardState.map((row, rowIndex) =>
                 row.map((tile, colIndex) =>
