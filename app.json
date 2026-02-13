@@ -2,7 +2,7 @@
     "expo": {
         "name": "2048-multilanguage",
         "slug": "2048-multilanguage",
-        "version": "1.0.1",
+        "version": "1.0.2",
         "orientation": "portrait",
         "icon": "./assets/icon.png",
         "userInterfaceStyle": "automatic",
@@ -24,7 +24,7 @@
                 "backgroundColor": "#E7B723"
             },
             "package": "com.karmalok.multilingual2048",
-            "versionCode": 2,
+            "versionCode": 3,
             "targetSdkVersion": 35
         },
         "web": {
